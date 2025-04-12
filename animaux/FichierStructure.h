@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define Max 1000
+#define MAX 1000
 
 typedef enum{
     chiens, 
@@ -14,9 +14,9 @@ typedef enum{
 typedef struct{
     int numero_iden;
     int annee;
-    int poids;
-    char nom[Max];
-    char descrip[Max];
+    float poids;
+    char nom[MAX];
+    char descrip[MAX];
     Espece espece;
 }Animale;
 
