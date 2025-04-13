@@ -5,11 +5,11 @@
 #define MAX 1000
 
 typedef enum{
-    chiens, 
+    chien = 1, 
     chats, 
     hamsters,
     autruche
-}Espece;
+}Espace;
 
 typedef struct{
     int numero_iden;
@@ -17,6 +17,6 @@ typedef struct{
     float poids;
     char nom[MAX];
     char descrip[MAX];
-    Espece espece;
+    Espace espace;
 }Animale;
 
