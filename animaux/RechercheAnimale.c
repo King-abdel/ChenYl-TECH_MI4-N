@@ -92,7 +92,7 @@ int RechercheAnimale(Animale *tab[], char n[], int age, char e){
                 }
             }
             else {
-                printf("il n'y a pas de jeune avec ce nom\n")
+                printf("il n'y a pas de jeune avec ce nom\n");
             }
         }
   
