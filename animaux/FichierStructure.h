@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#define NbAnimale 50
 #define MAX 1000
 
 typedef enum{
