@@ -18,6 +18,6 @@ typedef struct{
     float poids;
     char nom[MAX];
     char descrip[MAX];
-    Espace espace;
+    Espace espece;
 }Animale;
 
