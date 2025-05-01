@@ -10,7 +10,7 @@ typedef enum{
     chats, 
     hamsters,
     autruche
-}Espace;
+}Espece;
 
 typedef struct{
     int numero_iden;
@@ -18,6 +18,6 @@ typedef struct{
     float poids;
     char nom[MAX];
     char descrip[MAX];
-    Espace espece;
+    Espece espece;
 }Animale;
 

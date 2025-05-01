@@ -1,7 +1,7 @@
 #include "FichierStructure.h"
 
 
-Espace ChoisirEspace(){
+Espece ChoisirEspece(){
     int a;
     printf("Choisissez l'espèce de l'animal :\n");
     printf("1 : Chien\n");
@@ -85,17 +85,17 @@ int RechercheAnimale(Animale *tab[], char n[], int age, char e){
         printf("quelle est l'âge de l'animale ?\n");
         scanf("%d", &age);
     }
-    e = ChoisirEspace();
+    e = ChoisirEspece();
 
     // je sais pas comment faire pour que à chaque fois que le joueur entre une information. je valide.
 
     if(age < 2){
         printf("l'animale est un enfant ");
         for(i = 0; i < taille_decoup; i++){
-            if(strcmp(enfant[i].nom, n) == 0 && enfant[i].espace == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
+            if(strcmp(enfant[i].nom, n) == 0 && enfant[i].espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
                     printf("l'animale existe, Voilà ses informations :\n");
                     printf("nom : %s\n", enfant[i].nom);
-                    printf("espace : %s\n", enfant[i].espace);
+                    printf("espace : %s\n", enfant[i].espece);
                     printf("numéro d'identité : %d\n", enfant[i].numero_iden);
                     printf("année de naissance : %d\n", enfant[i].annee);
                     printf("poids : %f\n", enfant[i].poids);
@@ -109,10 +109,10 @@ int RechercheAnimale(Animale *tab[], char n[], int age, char e){
     else if(age > 10){
         printf("l'animale est un sénior ");
         for(i = 0; i < taille_decoup; i++){
-            if(strcmp(senior[i].nom, n) == 0 && senior[i].espace == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
+            if(strcmp(senior[i].nom, n) == 0 && senior[i].espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
                     printf("l'animale existe, Voilà ses différents informations :\n");
                     printf("nom : %s\n", senior[i].nom);
-                    printf("espace : %s\n", senior[i].espace);
+                    printf("espace : %s\n", senior[i].espece);
                     printf("numéro d'identité : %d\n", senior[i].numero_iden);
                     printf("année de naissance : %d\n", senior[i].annee);
                     printf("poids : %f\n", senior[i].poids);
@@ -126,10 +126,10 @@ int RechercheAnimale(Animale *tab[], char n[], int age, char e){
     else if(age >= 2 && age <= 10){
         printf("l'animale est un jeune ");
         for(i = 0; i < taille_decoup; i++){
-            if(strcmp(jeune[i].nom, n) == 0 && jeune[i].espace == e){       // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
+            if(strcmp(jeune[i].nom, n) == 0 && jeune[i].espece == e){       // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
                     printf("l'animale existe, Voilà ses différents informations :\n");
                     printf("nom : %s\n", jeune[i].nom);
-                    printf("espace : %s\n", jeune[i].espace);
+                    printf("espace : %s\n", jeune[i].espece);
                     printf("numéro d'identité : %d\n", jeune[i].numero_iden);
                     printf("année de naissance : %d\n", jeune[i].annee);
                     printf("poids : %f\n", jeune[i].poids);
