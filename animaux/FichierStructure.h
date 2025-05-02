@@ -20,7 +20,7 @@ typedef struct{
     char descrip[MAX];
     Espece espece;
 }Animal;
-Animal animaux[NbAnimale];
+Animal refuge[NbAnimale];
 int nb_animal= 0;
 int prochain_id=0;
 
