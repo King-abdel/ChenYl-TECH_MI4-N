@@ -7,10 +7,10 @@ void adopter_animal() {
 
     int trouvé = 0;
     for (int i = 0; i < nb_animaux; i++) {
-        if (animaux[i].id == id) {
+        if (refuge[i].id == id) {
             trouvé = 1;
             for (int j = i; j < nb_animaux - 1; j++) {
-                animaux[j] = animaux[j + 1];
+                refuge[j] = refuge[j + 1];
             }
             nb_animaux--;
             printf("Animal avec ID %d adopté avec succès.\n", id);
