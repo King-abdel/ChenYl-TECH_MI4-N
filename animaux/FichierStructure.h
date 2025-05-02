@@ -19,5 +19,8 @@ typedef struct{
     char nom[MAX];
     char descrip[MAX];
     Espece espece;
-}Animale;
+}Animal;
+Animal animaux[NbAnimale];
+int nb_animal= 0;
+int prochain_id=0;
 
