@@ -10,8 +10,6 @@ void afficherMenu() {
     printf("5. Quitter\n");
     printf("Choix : ");
 }
-
-int main() {
     int choix;
     do {
         afficherMenu();
@@ -45,8 +43,6 @@ int main() {
         printf("\n");
     } while (choix != 5);
 
-    return 0;
-}
 
 
 	
