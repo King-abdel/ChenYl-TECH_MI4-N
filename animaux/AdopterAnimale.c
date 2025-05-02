@@ -18,7 +18,7 @@ void adopter_animal() {
         }
     }
 
-    if (!trouvé) {
+    if (trouvé==0) {
         printf("Aucun animal trouvé avec l'ID %d.\n", id);
     }
 }
