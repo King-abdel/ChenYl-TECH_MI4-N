@@ -6,10 +6,10 @@ void adopter_animal() {
     scanf("%d", &id);
 
     int trouvé = 0;
-    for (int i = 0; i < nb_animaux; i++) {
+    for (int i = 0; i < nb_animal; i++) {
         if (refuge[i].id == id) {
             trouvé = 1;
-            for (int j = i; j < nb_animaux - 1; j++) {
+            for (int j = i; j < nb_animal; - 1; j++) {
                 refuge[j] = refuge[j + 1];
             }
             nb_animaux--;
