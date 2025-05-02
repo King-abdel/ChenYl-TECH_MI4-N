@@ -9,11 +9,11 @@ void afficherMenu() {
     printf("4. Afficher l'inventaire\n");
     printf("5. Quitter\n");
     printf("Choix : ");
-}
+	
     int choix;
     do {
         scanf("%d", &choix);
-
+	    
         switch (choix) {
             case 1:
                 printf("→ [Ajouter un animal] 🐶\n");
@@ -33,9 +33,8 @@ void afficherMenu() {
             default:
                 printf("Choix invalide, réessaie ! ❌\n");
         }
-        printf("\n");
     } while (choix<=0 || choix >= 5);
-
+}
 
 
 	
