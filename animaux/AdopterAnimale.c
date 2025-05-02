@@ -12,7 +12,7 @@ void adopter_animal() {
             for (int j = i; j < nb_animal; - 1; j++) {
                 refuge[j] = refuge[j + 1];
             }
-            nb_animaux--;
+            nb_animal--;
             printf("Animal avec ID %d adopté avec succès.\n", id);
             break;
         }
