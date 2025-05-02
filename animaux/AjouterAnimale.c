@@ -19,6 +19,9 @@ scanf("%d", &a.annee);
 
 printf("Poids (kg) : ");
 scanf("%f", &a.poids);
+    
+printf("Description : ");
+scanf("%s", a.descrip);
 
 refuge[nb_animaux++] = a;
 printf("Animal ajouté, son id est %d.\n", a.numero_iden);
