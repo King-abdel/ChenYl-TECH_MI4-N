@@ -34,7 +34,7 @@ void afficherMenu() {
                 printf("Choix invalide, réessaie ! ❌\n");
         }
         printf("\n");
-    } while (choix != 5);
+    } while (choix<=0 || choix >= 5);
 
 
 
