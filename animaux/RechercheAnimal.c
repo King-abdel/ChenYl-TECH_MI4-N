@@ -71,9 +71,9 @@ int AnneeCourante(){
 int RechercheAnimale(Animal *tab[], char n[], int age, char e){
     int i, b = AnneeCourante();
     int taille_decoup;
-    Animal enfant[NbAnimale];  
-    Animal jeune[NbAnimale];
-    Animal senior[NbAnimale];
+    Animal enfant[NbAnimal];  
+    Animal jeune[NbAnimal];
+    Animal senior[NbAnimal];
 
     taille_decoup = DecoupageTabAge(tab, age, enfant, jeune, senior, b);
     printf("Rentrer le nom de l'aniamle\n");
@@ -96,7 +96,7 @@ int RechercheAnimale(Animal *tab[], char n[], int age, char e){
                     printf("l'animale existe, Voilà ses informations :\n");
                     printf("nom : %s\n", enfant[i].nom);
                     printf("espace : %s\n", enfant[i].espece);
-                    printf("numéro d'identité : %d\n", enfant[i].numero_iden);
+                    printf("numéro d'identité : %d\n", enfant[i].id);
                     printf("année de naissance : %d\n", enfant[i].annee);
                     printf("poids : %f\n", enfant[i].poids);
                     printf("déscription : %s\n", enfant[i].descrip);
@@ -113,7 +113,7 @@ int RechercheAnimale(Animal *tab[], char n[], int age, char e){
                     printf("l'animale existe, Voilà ses différents informations :\n");
                     printf("nom : %s\n", senior[i].nom);
                     printf("espace : %s\n", senior[i].espece);
-                    printf("numéro d'identité : %d\n", senior[i].numero_iden);
+                    printf("numéro d'identité : %d\n", senior[i].id);
                     printf("année de naissance : %d\n", senior[i].annee);
                     printf("poids : %f\n", senior[i].poids);
                     printf("déscription : %s\n", senior[i].descrip);
@@ -130,7 +130,7 @@ int RechercheAnimale(Animal *tab[], char n[], int age, char e){
                     printf("l'animale existe, Voilà ses différents informations :\n");
                     printf("nom : %s\n", jeune[i].nom);
                     printf("espace : %s\n", jeune[i].espece);
-                    printf("numéro d'identité : %d\n", jeune[i].numero_iden);
+                    printf("numéro d'identité : %d\n", jeune[i].id);
                     printf("année de naissance : %d\n", jeune[i].annee);
                     printf("poids : %f\n", jeune[i].poids);
                     printf("déscription : %s\n", jeune[i].descrip);

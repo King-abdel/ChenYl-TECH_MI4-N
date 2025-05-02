@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define NbAnimale 50
+#define NbAnimal 50
 #define MAX 1000
 
 typedef enum{
@@ -13,11 +13,14 @@ typedef enum{
 }Espece;
 
 typedef struct{
-    int numero_iden;
+    int id;
     int annee;
     float poids;
     char nom[MAX];
     char descrip[MAX];
     Espece espece;
-}Animale;
+}Animal;
 
+Animal refuge[NbAnimal];
+int nb_animal= 0;
+int prochain_id=1;
