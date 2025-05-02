@@ -48,7 +48,7 @@ int AnneeCourante(){
  }
 */
 
- int DecoupageTabAge(Animale *tab[], int a, Animale *enfant[], Animale *jeune[],Animale *senior[], int year){
+ int DecoupageTabAge(Animal *tab[], int a, Animal *enfant[], Animal *jeune[],Animal *senior[], int year){
     int i, age_animale, j = 0;
     age_animale = year - tab[i]->annee;
     for(i = 0; i < 50; i++){        // on doit vérifier que le tableau n'est pas null puisque c'est un pointeur. Zain dois faire ça dans sa fonction.
@@ -68,12 +68,12 @@ int AnneeCourante(){
     return j;
 }
 
-int RechercheAnimale(Animale *tab[], char n[], int age, char e){
+int RechercheAnimale(Animal *tab[], char n[], int age, char e){
     int i, b = AnneeCourante();
     int taille_decoup;
-    Animale enfant[NbAnimale];  
-    Animale jeune[NbAnimale];
-    Animale senior[NbAnimale];
+    Animal enfant[NbAnimale];  
+    Animal jeune[NbAnimale];
+    Animal senior[NbAnimale];
 
     taille_decoup = DecoupageTabAge(tab, age, enfant, jeune, senior, b);
     printf("Rentrer le nom de l'aniamle\n");

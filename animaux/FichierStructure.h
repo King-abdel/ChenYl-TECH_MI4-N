@@ -19,5 +19,5 @@ typedef struct{
     char nom[MAX];
     char descrip[MAX];
     Espece espece;
-}Animale;
+}Animal;
 

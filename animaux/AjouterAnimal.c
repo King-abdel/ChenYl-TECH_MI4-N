@@ -5,7 +5,7 @@ void ajouter_animal(){
     printf("Capacité maximale atteinte.\n");
     return 1;
 }
-Animale a;
+Animal a;
 a.numero_iden = prochain_id++;
 
 printf("Nom : ");
