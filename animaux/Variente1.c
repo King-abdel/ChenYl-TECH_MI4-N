@@ -1,37 +1,41 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef struct {
-    char espece[20];
-} Animal;
+void afficherInventaireNbDesc() {
+    int compteur[4] = {0}; 
+    int indices[4] = {0, 1, 2, 3}; 
 
-int main() {
-    Animal chenil[6]; // on réserve de la place pour 6 animaux
-
-  
-    strcpy(chenil[0].espece, "hamster");
-    strcpy(chenil[1].espece, "chat");
-    strcpy(chenil[2].espece, "chien");
-    strcpy(chenil[3].espece, "autruche");
-    strcpy(chenil[4].espece, "chien");
-    strcpy(chenil[5].espece, "vide");
-
-    int total_minutes = 0;
-    int nb_animaux = 6;
-
-    for (int i = 0; i < nb_animaux; i++) {
-        if (strcmp(chenil[i].espece, "hamster") == 0 || strcmp(chenil[i].espece, "chat") == 0) {
-            total_minutes += (10 * 7) + 20;
-        } else if (strcmp(chenil[i].espece, "autruche") == 0) {
-            total_minutes += (20 * 7) + 45;
-        } else if (strcmp(chenil[i].espece, "chien") == 0) {
-            total_minutes += (5 * 7) + 20;
-        } else {
-            total_minutes += (2 * 7); // cage vide
+   
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].espece >= chien && refuge[i].espece <= autruche) {
+            compteur[refuge[i].espece - 1]++;
         }
     }
 
-    printf("Temps total de nettoyage hebdomadaire : %d minutes\n", total_minutes);
+    for (int i = 0; i < 3; i++) {
+        for (int j = i + 1; j < 4; j++) {
+            if (compteur[i] < compteur[j]) {
+                
+                int tmp = compteur[i];
+                compteur[i] = compteur[j];
+                compteur[j] = tmp;
+                
+                int tmpIdx = indices[i];
+                indices[i] = indices[j];
+                indices[j] = tmpIdx;
+            }
+        }
+    }
 
-    return 0;
+
+    const char *nomsEspeces[4] = { "Chien 🐶", "Chat 🐱", "Hamster 🐹", "Autruche 🐦" };
+
+    printf("\n📦 Nombre total d'animaux : %d\n", nb_animal);
+    printf("📊 Détail par espèce (ordre décroissant) :\n");
+
+    for (int i = 0; i < 4; i++) {
+        if (compteur[i] > 0) {
+            printf("   - %s : %d\n", nomsEspeces[indices[i]], compteur[i]);
+        }
+    }
 }
