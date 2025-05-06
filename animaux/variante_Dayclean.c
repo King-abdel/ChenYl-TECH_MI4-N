@@ -4,6 +4,8 @@ int calculer_charge_nettoyage_hebdomadaire() {
     for (int i = 0; i < nb_animal; i++) {
         switch (refuge[i].espece) {
             case hamsters:
+                 total_minutes += (10 * 7) + 20; // 10 min/jour + 20 min/semaine
+                 break;
             case chats:
                 total_minutes += (10 * 7) + 20; // 10 min/jour + 20 min/semaine
                 break;
