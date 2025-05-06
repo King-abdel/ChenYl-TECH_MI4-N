@@ -1,0 +1,179 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#define NbAnimal 50
+#define MAX 1000
+
+typedef enum{
+    chien = 1, 
+    chats, 
+    hamsters,
+    autruche
+}Espece;
+
+typedef struct{
+    int id;
+    int annee;
+    float poids;
+    char nom[MAX];
+    char descrip[MAX];
+    Espece espece;
+}Animal;
+
+Animal refuge[NbAnimal];
+int nb_animal= 0;
+int prochain_id=1;
+
+
+void afficheAnimale(Animal a, int choix){
+	printf("-----\n");
+	printf("Nom : %s\n", a.nom);
+	printf("id : %d\n", a.id);
+	printf("annee : %d\n", a.annee);
+	printf("poids : %f\n", a.poids);
+	int b = a.espece;
+	switch(a.espece){
+        case 1 :
+       		printf("Espece : chien \n");
+       		break;
+        case 2 :
+       		printf("Espece : chat \n");
+      		break;
+        case 3 :
+        	printf("Espece : Hamster \n");
+        	break;
+        case 4 :
+        	printf("Espece : Autruche \n");
+        	break;
+	}
+	if(choix==1){    
+    		printf("description : %s\n", a.descrip);
+	}
+	 printf("-----\n");
+	}
+
+void ajouter_animal(){ 
+    if (nb_animal >= NbAnimal) {
+    	printf("Capacité maximale atteinte.\n");
+	}
+	else{	
+	Animal a;
+	a.id = prochain_id++;
+	
+	printf("Nom : \n");
+	scanf("%s", a.nom);
+	
+	do{
+		printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : \n");
+		scanf("%d", &a.espece);
+	}while(a.espece<1 || a.espece>4);
+
+	do{
+		printf("Année de naissance : \n");
+		scanf("%d", &a.annee);
+	}while(a.annee<0);
+	
+	do{
+		printf("Poids (kg) : \n");
+		scanf("%f", &a.poids);
+	}while(a.poids<=0);   
+
+	int choix;
+	do{
+		printf("Voulez-vous ajouter une description : 1 oui 2 non \n");
+		scanf("%d", &choix);
+	}while(choix!=1 && choix!=2);
+		if(choix == 1){
+			printf("Description : \n");
+			scanf("%s", a.descrip);
+		}
+	
+	refuge[nb_animal++] = a;
+	
+	afficheAnimale(a, choix);
+
+}}
+
+void adopter_animal() {
+    int id;
+    printf("ID de l'animal à adopter : ");
+    scanf("%d", &id);
+
+    int trouvé = 0;
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].id == id) {
+            trouvé = 1;
+            for (int j = i; j < nb_animal - 1; j++) {
+                refuge[j] = refuge[j + 1];
+            }
+            nb_animal--;
+            printf("-----\n");
+            printf("Animal avec ID %d adopté avec succès.\n", id);
+            break;
+        }
+    }
+
+    if (trouvé==0) {
+        printf("Aucun animal trouvé avec l'ID %d.\n", id);
+    }
+}
+
+void afficherMenu() {
+    printf("🐾 === ChenYl-Tech - Menu Principal === 🐾\n");
+    printf("1. Ajouter un animal\n");
+    printf("2. Rechercher un animal\n");
+    printf("3. Supprimer un animal (adoption)\n");
+    printf("4. Afficher l'inventaire\n");
+    printf("5. Afficher  charge travail\n");
+    printf("6. Quitter\n");
+    printf("Choix : ");
+	
+    int choix;
+    do {
+        scanf("%d", &choix);
+	    
+        switch (choix) {
+            case 1:
+            printf("→ [Ajouter un animal] 🐶\n");
+            ajouter_animal();
+            afficherMenu();
+            break;
+        case 2:
+            printf("→ [Rechercher un animal] 🔍\n");
+            afficherMenu();
+            break;
+        case 3:
+            printf("→ [Supprimer un animal] 🚪\n");
+            adopter_animal();
+               afficherMenu();
+               break;
+        case 4:
+            printf("→ [Afficher l'inventaire] 📋\n");
+            afficherMenu();
+            break;
+       case 5:
+            printf("→ [Afficher  charge travail] 🧳\n");
+            afficherMenu();
+            break;
+        case 6:
+            printf("Au revoir ! 👋\n");
+           
+            break;
+        default:
+            printf("Choix invalide, réessaie ! ❌\n");
+            afficherMenu();
+            break;
+    }
+}while(choix<=0 || choix >= 6);
+}
+
+
+int main(){
+	afficherMenu();
+
+	
+return 0;
+}
+
+
