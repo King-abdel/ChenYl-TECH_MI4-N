@@ -21,6 +21,6 @@ typedef struct{
     Espece espece;
 }Animal;
 
-Animal refuge[NbAnimal];
+Animal *refuge[NbAnimal];
 int nb_animal= 0;
 int prochain_id=1;

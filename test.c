@@ -32,21 +32,12 @@ Espece ChoisirEspece(){
     printf("2 : Chat\n");
     printf("3 : Hamster\n");
     printf("4 : Autruche\n");
+    printf("choix : ");
     scanf("%d", &a);
     while(a < 1 || a > 4){
         scanf("%d", &a);
     }
-    switch(a){
-        case 1 :
-        return 'Chien';
-        case 2 :
-        return 'Chat';
-        case 3 :
-        return 'Hamster';
-        case 4 :
-        return 'Autruche';
-    }
-    return 0;
+    return (Espece)a;   //switch case ne marche pas avec moi.
 }
 /*
 int AnneeCouranteBessixtille(){
@@ -72,100 +63,23 @@ int AnneeCourante(){
  }
 */
 
- int DecoupageTabAge(Animal *tab[], int a, Animal *enfant[], Animal *jeune[],Animal *senior[], int year){
+ int DecoupageTabAge(Animal *enfant[], Animal *jeune[],Animal *senior[]){
     int i, age_animale, j = 0;
-    age_animale = year - tab[i]->annee;
-    for(i = 0; i < 50; i++){        // on doit vérifier que le tableau n'est pas null puisque c'est un pointeur. Zain dois faire ça dans sa fonction.
-        if(a < 2 && age_animale < 2){
-            enfant[j] = tab[i];
-            j++;
+    for(i = 0; i < 50; i++){        // on doit vérifier que le tableau n'est pas null puisque c'est un pointeur. Zain dois faire ça dans sa fonction.  
+        if (age_animale < 2){
+            enfant[j++] = &refuge[i];
         }
-        else if((a >= 2 && age_animale >= 2) && (a <= 10 && age_animale <= 10)){
-            jeune[j] = tab[i];
-            j++;
+        else if (age_animale <= 10){
+            jeune[j++] = &refuge[i];
         }
-        else if(a > 10 && age_animale > 10){
-            senior[j] = tab[i];
-            j++;
+        else{
+            senior[j++] = &refuge[i];
         }
     }
     return j;
 }
 
-int RechercheAnimale(Animal *tab[]){
-    char n[50], e;
-    int i, age, b = AnneeCourante();
-    int taille_decoup;
-    Animal enfant[NbAnimal];  
-    Animal jeune[NbAnimal];
-    Animal senior[NbAnimal];
 
-    taille_decoup = DecoupageTabAge(tab, age, enfant, jeune, senior, b);
-    printf("Rentrer le nom de l'aniaml\n");
-    scanf("%s", n);
-    printf("quelle est l'âge de l'animal ?\n");
-    scanf("%d", &age);
-    while(age < 0){
-        printf("l'âge doit être positif\n");
-        printf("quelle est l'âge de l'animal ?\n");
-        scanf("%d", &age);
-    }
-    e = ChoisirEspece();
-
-    // je sais pas comment faire pour que à chaque fois que le joueur entre une information. je valide.
-
-    if(age < 2){
-        printf("l'animal est un enfant ");
-        for(i = 0; i < taille_decoup; i++){
-            if(strcmp(enfant[i].nom, n) == 0 && enfant[i].espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
-                    printf("l'animal existe, Voilà ses informations :\n");
-                    printf("nom : %s\n", enfant[i].nom);
-                    printf("espace : %s\n", enfant[i].espece);
-                    printf("numéro d'identité : %d\n", enfant[i].id);
-                    printf("année de naissance : %d\n", enfant[i].annee);
-                    printf("poids : %f\n", enfant[i].poids);
-                    printf("déscription : %s\n", enfant[i].descrip);
-                    return 0;
-                }
-            }
-        printf("ces informations ne correspondent à aucun animale\n");
-    }
-
-    else if(age > 10){
-        printf("l'animal est un sénior ");
-        for(i = 0; i < taille_decoup; i++){
-            if(strcmp(senior[i].nom, n) == 0 && senior[i].espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
-                    printf("l'animal existe, Voilà ses différents informations :\n");
-                    printf("nom : %s\n", senior[i].nom);
-                    printf("espace : %s\n", senior[i].espece);
-                    printf("numéro d'identité : %d\n", senior[i].id);
-                    printf("année de naissance : %d\n", senior[i].annee);
-                    printf("poids : %f\n", senior[i].poids);
-                    printf("déscription : %s\n", senior[i].descrip);
-                    return 0;
-                }
-            }
-        printf("ces informations ne correspondent à aucun animal\n");
-    }
-    
-    else if(age >= 2 && age <= 10){
-        printf("l'animal est un jeune ");
-        for(i = 0; i < taille_decoup; i++){
-            if(strcmp(jeune[i].nom, n) == 0 && jeune[i].espece == e){       // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
-                    printf("l'animal existe, Voilà ses différents informations :\n");
-                    printf("nom : %s\n", jeune[i].nom);
-                    printf("espace : %s\n", jeune[i].espece);
-                    printf("numéro d'identité : %d\n", jeune[i].id);
-                    printf("année de naissance : %d\n", jeune[i].annee);
-                    printf("poids : %f\n", jeune[i].poids);
-                    printf("déscription : %s\n", jeune[i].descrip);
-                    return 0;
-                }
-            }
-        printf("ces informations ne correspondent à aucun animal\n");
-    }   
-     return 1;
-}
 
 
 void afficheAnimale(Animal a){
@@ -188,8 +102,72 @@ void afficheAnimale(Animal a){
         printf("Espece : Autruche \n");
         break;
 	}
-	
-	}
+    printf("description : %s\n", a.descrip);
+}
+
+
+    int RechercheAnimale(){
+        char n[50];
+        Espece e;
+        int i, age, b = AnneeCourante();
+        int taille_decoup;
+        Animal *enfant[NbAnimal];  
+        Animal *jeune[NbAnimal];
+        Animal *senior[NbAnimal];
+        
+    
+        taille_decoup = DecoupageTabAge(enfant, jeune, senior);
+        printf("Rentrer le nom de l'aniaml\n");
+        scanf("%s", n);
+        printf("quelle est l'âge de l'animal ?\n");
+        scanf("%d", &age);
+        while(age < 0){
+            printf("l'âge doit être positif\n");
+            printf("quelle est l'âge de l'animal ?\n");
+            scanf("%d", &age);
+        }
+        e = ChoisirEspece();
+    
+        // je sais pas comment faire pour que à chaque fois que le joueur entre une information. je valide.
+    
+        if(age < 2){
+            printf("l'animal est un enfant ");
+            for(i = 0; i < taille_decoup; i++){
+                if(strcmp(enfant[i]->nom, n) == 0 && enfant[i]->espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
+                        printf("l'animal existe, Voilà ses informations :\n");
+                        afficheAnimale(*enfant[i]);
+                        return 0;
+                    }
+                }
+            printf("ces informations ne correspondent à aucun animale\n");
+        }
+    
+        else if(age > 10){
+            printf("l'animal est un sénior ");
+            for(i = 0; i < taille_decoup; i++){
+                if(strcmp(senior[i]->nom, n) == 0 && senior[i]->espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
+                        printf("l'animal existe, Voilà ses différents informations :\n");
+                        afficheAnimale(*senior[i]);
+                        return 0;
+                    }
+                }
+            printf("ces informations ne correspondent à aucun animal\n");
+        }
+        
+        else if(age >= 2 && age <= 10){
+            printf("l'animal est un jeune ");
+            for(i = 0; i < taille_decoup; i++){
+                if(strcmp(jeune[i]->nom, n) == 0 && jeune[i]->espece == e){       // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
+                        printf("l'animal existe, Voilà ses différents informations :\n");
+                        afficheAnimale(*jeune[i]);
+                        return 0;
+                    }
+                }
+            printf("ces informations ne correspondent à aucun animal\n");
+        }   
+         return 1;
+    }	
+
 
 void ajouter_animal(){ 
     if (nb_animal >= NbAnimal) {
@@ -227,30 +205,10 @@ void ajouter_animal(){
 		printf("Description : ");
 		scanf("%s", a.descrip);
 	}
-
-	/*printf("Nom : %s\n", a.nom);
-	printf("id : %d\n", a.id);
-	printf("annee : %d\n", a.annee);
-	printf("poids : %f\n", a.poids);
-	int b = a.espece;
-	switch(a.espece){
-        case 1 :
-        printf("Espece : chien \n");
-        break;
-        case 2 :
-       printf("Espece : chat \n");
-       break;
-        case 3 :
-        printf("Espece : Hamster \n");
-        break;
-        case 4 :
-        printf("Espece : Autruche \n");
-        break;
-	} */
-	
+    afficheAnimale(a);
 	refuge[nb_animal++] = a;
-
-}}
+}
+}
 
 
 void adopter_animal() {
@@ -277,6 +235,45 @@ void adopter_animal() {
 
 }
 
+void afficherInventaireNbDesc() {
+    int compteur[4] = {0}; 
+    int indices[4] = {0, 1, 2, 3}; 
+
+   
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].espece >= chien && refuge[i].espece <= autruche) {
+            compteur[refuge[i].espece - 1]++;
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = i + 1; j < 4; j++) {
+            if (compteur[i] < compteur[j]) {
+                
+                int tmp = compteur[i];
+                compteur[i] = compteur[j];
+                compteur[j] = tmp;
+                
+                int tmpIdx = indices[i];
+                indices[i] = indices[j];
+                indices[j] = tmpIdx;
+            }
+        }
+    }
+
+
+    const char *nomsEspeces[4] = { "Chien 🐶", "Chat 🐱", "Hamster 🐹", "Autruche 🐦" };
+
+    printf("\n📦 Nombre total d'animaux : %d\n", nb_animal);
+    printf("📊 Détail par espèce (ordre décroissant) :\n");
+
+    for (int i = 0; i < 4; i++) {
+        if (compteur[i] > 0) {
+            printf("   - %s : %d\n", nomsEspeces[indices[i]], compteur[i]);
+        }
+    }
+}
+
 int afficherMenu() {
     printf("🐾 === ChenYl-Tech - Menu Principal === 🐾\n");
     printf("1. Ajouter un animal\n");
@@ -296,7 +293,7 @@ int afficherMenu() {
                 break;
             case 2:
                 printf("→ [Rechercher un animal] 🔍\n");
-                RechercheAnimale(refuge);
+                RechercheAnimale();
                 afficherMenu();
                 break;
             case 3:
@@ -306,6 +303,7 @@ int afficherMenu() {
                	break;
             case 4:
                 printf("→ [Afficher l'inventaire] 📋\n");
+                afficherInventaireNbDesc();
                 afficherMenu();
                 break;
             case 5:

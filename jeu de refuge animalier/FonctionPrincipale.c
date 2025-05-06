@@ -1,3 +1,6 @@
+#include "FichierStructure.h"
+#include "FichierSource.h"
+
 int afficherMenu() {
    printf("🐾 === ChenYl-Tech - Menu Principal === 🐾\n");
    printf("1. Ajouter un animal\n");
@@ -16,18 +19,20 @@ int afficherMenu() {
                afficherMenu();
                break;
            case 2:
-               printf("→ [Rechercher un animal] 🔍\n");
-               afficherMenu();
-               break;
+                printf("→ [Rechercher un animal] 🔍\n");
+                RechercheAnimale(refuge);
+                afficherMenu();
+                break;
            case 3:
-               printf("→ [Supprimer un animal] 🚪\n");
-               adopter_animal();
-                 afficherMenu();
-                 break;
+                printf("→ [Supprimer un animal] 🚪\n");
+                adopter_animal();
+                afficherMenu();
+                break;
            case 4:
-               printf("→ [Afficher l'inventaire] 📋\n");
-               afficherMenu();
-               break;
+                printf("→ [Afficher l'inventaire] 📋\n");
+                afficherInventaireNbDesc(refuge);
+                afficherMenu();
+                break;
            case 5:
                printf("Au revoir ! 👋\n");
                return 0;

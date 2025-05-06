@@ -1,5 +1,28 @@
 #include "FichierStructure.h"
 
+
+void afficheAnimale(Animal b){
+	printf("Nom : %s\n", b.nom);
+	printf("id : %d\n", b.id);
+	printf("annee : %d\n", b.annee);
+	printf("poids : %f\n", b.poids);
+	switch(b.espece){
+        case 1 :
+			printf("Espece : chien \n");
+			break;
+        case 2 :
+			printf("Espece : chat \n");
+			break;
+        case 3 :
+			printf("Espece : Hamster \n");
+			break;
+        case 4 :
+			printf("Espece : Autruche \n");
+			break;
+	}
+	printf("description : %s\n", b.descrip);
+}
+
 void ajouter_animal(){ 
     if (nb_animal >= NbAnimal) {
     	printf("Capacité maximale atteinte.\n");
@@ -36,27 +59,7 @@ void ajouter_animal(){
 		printf("Description : ");
 		scanf("%s", a.descrip);
 	}
-
-	/*printf("Nom : %s\n", a.nom);
-	printf("id : %d\n", a.id);
-	printf("annee : %d\n", a.annee);
-	printf("poids : %f\n", a.poids);
-	int b = a.espece;
-	switch(a.espece){
-        case 1 :
-        printf("Espece : chien \n");
-        break;
-        case 2 :
-       printf("Espece : chat \n");
-       break;
-        case 3 :
-        printf("Espece : Hamster \n");
-        break;
-        case 4 :
-        printf("Espece : Autruche \n");
-        break;
-	} */
-	
-	refuge[nb_animal++] = a;
+	afficheAnimale(a);
+	*refuge[nb_animal++] = a;
     }
 }
