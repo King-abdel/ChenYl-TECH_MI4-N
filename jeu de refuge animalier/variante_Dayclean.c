@@ -1,3 +1,5 @@
+#include "FichierStructure.h"
+
 int calculer_charge_nettoyage_hebdomadaire() {
     int total_minutes = 0;
 
