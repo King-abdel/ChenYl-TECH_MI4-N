@@ -38,6 +38,10 @@ void afficherMenu() {
        case 5:
             printf("→ [Afficher  charge travail] 🧳\n");
             calculer_charge_nettoyage_hebdomadaire();
+	        {
+        int charge = calculer_charge_nettoyage_hebdomadaire();
+        printf("🧼 Charge totale de nettoyage hebdomadaire : %d minutes\n", charge);
+    }
             afficherMenu();
             break;
         case 6:
