@@ -19,6 +19,7 @@ int calculer_charge_nettoyage_hebdomadaire() {
                 break;
         }
     }
-
+ int nb_vides = NbAnimal - nb_animal;
+    total_minutes += nb_vides * 14;
        return total_minutes;
 }
