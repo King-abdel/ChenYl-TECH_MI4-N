@@ -31,6 +31,7 @@ void afficherMenu() {
                break;
         case 4:
             printf("→ [Afficher l'inventaire] 📋\n");
+		afficherInventaireNbDesc();
             afficherMenu();
             break;
         case 5:
