@@ -7,7 +7,8 @@ void afficherMenu() {
     printf("2. Rechercher un animal\n");
     printf("3. Supprimer un animal (adoption)\n");
     printf("4. Afficher l'inventaire\n");
-    printf("5. Quitter\n");
+ printf("5. Afficher  charge travail\n");
+    printf("6. Quitter\n");
     printf("Choix : ");
 	
     int choix;
@@ -34,12 +35,17 @@ void afficherMenu() {
 		afficherInventaireNbDesc();
             afficherMenu();
             break;
-        case 5:
+       case 5:
+            printf("→ [Afficher  charge travail] 🧳\n");
+            calculer_charge_nettoyage_hebdomadaire();
+            afficherMenu();
+            break;
+        case 6:
             printf("Au revoir ! 👋\n");
-            return 0;
+            break;
         default:
             printf("Choix invalide, réessaie ! ❌\n");
             break;
     }
-}while(choix<=0 || choix >= 5);
+}while(choix<=0 || choix >= 6);
 }
