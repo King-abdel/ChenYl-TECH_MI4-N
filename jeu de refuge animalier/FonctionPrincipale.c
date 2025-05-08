@@ -1,7 +1,11 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
 
-void afficherMenu() {
+Animal refuge[NbAnimal];
+int nb_animal;
+int prochain_id = 1;
+
+int afficherMenu() {
     printf("🐾 === ChenYl-Tech - Menu Principal === 🐾\n");
     printf("1. Ajouter un animal\n");
     printf("2. Rechercher un animal\n");
@@ -12,46 +16,45 @@ void afficherMenu() {
     printf("Choix : ");
 	
     int choix;
-    do {
+
         scanf("%d", &choix);
 	    
         switch (choix) {
             case 1:
-            printf("→ [Ajouter un animal] 🐶\n");
-            ajouter_animal();
-            afficherMenu();
-            break;
-        case 2:
-            printf("→ [Rechercher un animal] 🔍\n");
-            RechercheAnimal();
-            afficherMenu();
-            break;
-        case 3:
-            printf("→ [Supprimer un animal] 🚪\n");
-            adopter_animal();
-            afficherMenu();
-            break;
-        case 4:
-            printf("→ [Afficher l'inventaire] 📋\n");
-		    afficherInventaireNbDesc();
-            afficherMenu();
-            break;
-       case 5:
-            printf("→ [Afficher  charge travail] 🧳\n");
-            calculer_charge_nettoyage_hebdomadaire();
-            afficherMenu();
-            break;
-        case 6:
-            printf("Au revoir ! 👋\n");
-            break;
-        default:
-            printf("Choix invalide, réessaie ! ❌\n");
-            break;
+                printf("→ [Ajouter un animal] 🐶\n");
+                ajouter_animal();
+                break;
+            case 2:
+                printf("→ [Rechercher un animal] 🔍\n");
+                RechercheAnimal();
+                break;
+            case 3:
+                printf("→ [Supprimer un animal] 🚪\n");
+                adopter_animal();
+                break;
+            case 4:
+                printf("→ [Afficher l'inventaire] 📋\n");
+                afficherInventaireNbDesc();
+                break;
+            case 5:
+                printf("→ [Afficher  charge travail] 🧳\n");
+                calculer_charge_nettoyage_hebdomadaire();
+                break;
+            case 6:
+                printf("Au revoir ! 👋\n");
+                return choix;
+            default:
+                printf("Choix invalide, réessaie ! ❌\n");
+                break;
     }
-}while(choix<=0 || choix >= 6);
+    return choix;
 }
 
 int main(){
-  afficherMenu();
+    int a = 0;
+    while(a != 6){
+	    a = afficherMenu();
+    }
+	
 return 0;
 }

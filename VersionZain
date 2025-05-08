@@ -53,6 +53,21 @@ void afficheAnimale(Animal a, int choix){
     printf("-----\n");   
     }
 	
+    int sauvegarder_animaux() {
+        FILE *f = fopen("animaux.txt", "w");  
+        if (!f) {  
+            printf("Erreur lors de l'ouverture du fichier de sauvegarde.\n");
+            return;
+        }
+        
+        for (int i = 0; i < nb_animal; i++) {
+            Animal a = refuge[i];
+            fprintf(f, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
+        }
+        
+        fclose(f);  
+        return 0;
+    }
 
 void ajouter_animal(){ 
     if (nb_animal >= NbAnimal) {
@@ -107,7 +122,7 @@ void ajouter_animal(){
     printf("✅ Animal ajouté avec succès.\n");
     sauvegarder_animaux();
 }
-
+}
 void adopter_animal() {
     int id;
     do{
@@ -189,20 +204,7 @@ void rechercher_animaux() {
     }
 }
 
-void sauvegarder_animaux() {
-    FILE *f = fopen("animaux.txt", "w");  
-    if (!f) {  
-        printf("Erreur lors de l'ouverture du fichier de sauvegarde.\n");
-        return;
-    }
-    
-    for (int i = 0; i < nb_animal; i++) {
-        Animal a = refuge[i];
-        fprintf(f, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
-    }
-    
-    fclose(f);  
-}
+
 void charger_animaux() {
     FILE *f = fopen("animaux.txt", "r");  
     if (!f) return;  
@@ -277,24 +279,22 @@ void afficherMenu() {
                 break;
             case 5:
                 printf("→ [Afficher  charge travail] 🧳\n");
-                int minutes = calculer_charge_nettoyage_hebdomadaire();
-                printf("Charge totale de nettoyage hebdomadaire : %d minutes (%d heures et %d minutes)\n",
-        minutes, minutes / 60, minutes % 60);
                 break;
             case 6:
                 printf("Au revoir ! 👋\n");
                 break;
-                default:
-
-            printf("Choix invalide, réessaie ! ❌\n");
-            break;
+            default:
+                printf("Choix invalide, réessaie ! ❌\n");
+                break;
     }
+    return choix;
 }
 
 
 int main(){
+    int a;
     charger_animaux();
-    while(1){
+    while(a != 6){
 	    afficherMenu();
     }
 	

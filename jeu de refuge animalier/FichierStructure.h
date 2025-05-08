@@ -1,3 +1,6 @@
+#ifndef FICHIERSTRUCTURE_H
+#define FICHIERSTRUCTURE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,22 +8,24 @@
 #define NbAnimal 50
 #define MAX 1000
 
-typedef enum{
-    chien = 1, 
-    chats, 
+typedef enum {
+    chien = 1,
+    chats,
     hamsters,
     autruche
-}Espece;
+} Espece;
 
-typedef struct{
+typedef struct {
     int id;
     int annee;
     float poids;
     char nom[MAX];
     char descrip[MAX];
     Espece espece;
-}Animal;
+} Animal;
 
-Animal refuge[NbAnimal];
-int nb_animal= 0;
-int prochain_id=1;
+extern Animal refuge[NbAnimal];
+extern int nb_animal;
+extern int prochain_id;
+
+#endif

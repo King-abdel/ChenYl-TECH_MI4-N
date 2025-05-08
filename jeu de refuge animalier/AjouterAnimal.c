@@ -1,6 +1,5 @@
 #include "FichierStructure.h"
 
-
 void afficheAnimale(Animal b){
 	printf("Nom : %s\n", b.nom);
 	printf("id : %d\n", b.id);
@@ -37,7 +36,7 @@ void ajouter_animal(){
 	
 	do{
 	printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
-	scanf("%d", &a.espece);
+	scanf("%d", (int*)&a.espece);
 	}while(a.espece<1 || a.espece>4);
 
 	do{
@@ -60,6 +59,6 @@ void ajouter_animal(){
 		scanf("%s", a.descrip);
 	}
 	afficheAnimale(a);
-	*refuge[nb_animal++] = a;
+	refuge[nb_animal++] = a;
     }
 }

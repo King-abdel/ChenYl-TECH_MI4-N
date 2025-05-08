@@ -39,50 +39,58 @@ int AnneeCourante(){
  }
 */
 
- int DecoupageTabAge(Animal *enfant[], Animal *jeune[],Animal *senior[]){
-    int i, age_animale, j = 0;
-    for(i = 0; i < 50; i++){        // on doit vérifier que le tableau n'est pas null puisque c'est un pointeur. Zain dois faire ça dans sa fonction.  
-        if (age_animale < 2){
-            enfant[j++] = &refuge[i];
-        }
-        else if (age_animale <= 10){
-            jeune[j++] = &refuge[i];
-        }
-        else{
-            senior[j++] = &refuge[i];
+void DecoupageTabAge(Animal *enfant[], Animal *jeune[], Animal *senior[], int *e, int *j, int *s) {
+    int i;
+    *e = *j = *s = 0;  
+    int annee_courante = AnneeCourante();
+
+    for (i = 0; i < nb_animal; i++) {  
+        int age = annee_courante - refuge[i].annee;
+
+        if (age < 2) {
+            enfant[*e] = &refuge[i];
+            (*e)++;
+        } else if (age <= 10) {
+            jeune[*j] = &refuge[i];
+            (*j++);
+        } else {
+            senior[*s] = &refuge[i];
+            (*s)++;
         }
     }
-    return j;
 }
+
 
 
     int RechercheAnimal(){
         char n[50];
         Espece e;
-        int i, age, b = AnneeCourante();
-        int taille_decoup;
+        int i, age, naissance;
+        int a, b, c;
+        int annee_courante = AnneeCourante();
         Animal *enfant[NbAnimal];  
         Animal *jeune[NbAnimal];
         Animal *senior[NbAnimal];
         
-    
-        taille_decoup = DecoupageTabAge(enfant, jeune, senior);
-        printf("Rentrer le nom de l'aniaml\n");
+        printf("Rentrer le nom de l'aniaml ?\n");
         scanf("%s", n);
-        printf("quelle est l'âge de l'animal ?\n");
-        scanf("%d", &age);
-        while(age < 0){
-            printf("l'âge doit être positif\n");
-            printf("quelle est l'âge de l'animal ?\n");
-            scanf("%d", &age);
-        }
+        do {
+            printf("Quelle est l'année de naissance de l'animal ? ");
+            scanf("%d", &naissance);
+            if (naissance < 1900 || naissance > annee_courante) {
+                printf("Année invalide ! Réessayez.\n");
+            }
+        } while (naissance < 1900 || naissance > annee_courante);
+    
+        age = annee_courante - naissance;
+        DecoupageTabAge(enfant, jeune, senior, &a, &b, &c);
         e = ChoisirEspece();
     
         // je sais pas comment faire pour que à chaque fois que le joueur entre une information. je valide.
     
         if(age < 2){
-            printf("l'animal est un enfant ");
-            for(i = 0; i < taille_decoup; i++){
+            printf("l'animal est un enfant \n ");
+            for(i = 0; i < a; i++){
                 if(strcmp(enfant[i]->nom, n) == 0 && enfant[i]->espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
                         printf("l'animal existe, Voilà ses informations :\n");
                         afficheAnimale(*enfant[i]);
@@ -93,8 +101,8 @@ int AnneeCourante(){
         }
     
         else if(age > 10){
-            printf("l'animal est un sénior ");
-            for(i = 0; i < taille_decoup; i++){
+            printf("l'animal est un sénior \n");
+            for(i = 0; i < c; i++){
                 if(strcmp(senior[i]->nom, n) == 0 && senior[i]->espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
                         printf("l'animal existe, Voilà ses différents informations :\n");
                         afficheAnimale(*senior[i]);
@@ -105,8 +113,8 @@ int AnneeCourante(){
         }
         
         else if(age >= 2 && age <= 10){
-            printf("l'animal est un jeune ");
-            for(i = 0; i < taille_decoup; i++){
+            printf("l'animal est un jeune \n");
+            for(i = 0; i < b; i++){
                 if(strcmp(jeune[i]->nom, n) == 0 && jeune[i]->espece == e){       // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
                         printf("l'animal existe, Voilà ses différents informations :\n");
                         afficheAnimale(*jeune[i]);
