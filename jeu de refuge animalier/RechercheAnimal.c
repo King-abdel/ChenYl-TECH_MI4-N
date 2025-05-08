@@ -56,7 +56,7 @@ int AnneeCourante(){
 }
 
 
-    int RechercheAnimale(){
+    int RechercheAnimal(){
         char n[50];
         Espece e;
         int i, age, b = AnneeCourante();

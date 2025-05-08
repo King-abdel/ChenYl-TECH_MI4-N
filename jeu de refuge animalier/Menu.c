@@ -7,7 +7,7 @@ void afficherMenu() {
     printf("2. Rechercher un animal\n");
     printf("3. Supprimer un animal (adoption)\n");
     printf("4. Afficher l'inventaire\n");
- printf("5. Afficher  charge travail\n");
+    printf("5. Afficher  charge travail\n");
     printf("6. Quitter\n");
     printf("Choix : ");
 	
@@ -23,25 +23,22 @@ void afficherMenu() {
             break;
         case 2:
             printf("→ [Rechercher un animal] 🔍\n");
+            RechercheAnimal();
             afficherMenu();
             break;
         case 3:
             printf("→ [Supprimer un animal] 🚪\n");
             adopter_animal();
-               afficherMenu();
-               break;
+            afficherMenu();
+            break;
         case 4:
             printf("→ [Afficher l'inventaire] 📋\n");
-		afficherInventaireNbDesc();
+		    afficherInventaireNbDesc();
             afficherMenu();
             break;
        case 5:
             printf("→ [Afficher  charge travail] 🧳\n");
             calculer_charge_nettoyage_hebdomadaire();
-	        {
-        int charge = calculer_charge_nettoyage_hebdomadaire();
-        printf("🧼 Charge totale de nettoyage hebdomadaire : %d minutes\n", charge);
-    }
             afficherMenu();
             break;
         case 6:

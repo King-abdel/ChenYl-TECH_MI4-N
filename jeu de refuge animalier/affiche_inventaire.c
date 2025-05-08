@@ -8,8 +8,8 @@ void afficherInventaireNbDesc() {
 
    
     for (int i = 0; i < nb_animal; i++) {
-        if (refuge[i]->espece >= chien && refuge[i]->espece <= autruche) {
-            compteur[refuge[i]->espece - 1]++;
+        if (refuge[i].espece >= chien && refuge[i].espece <= autruche) {
+            compteur[refuge[i].espece - 1]++;
         }
     }
 
