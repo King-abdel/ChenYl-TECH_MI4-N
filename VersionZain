@@ -31,8 +31,7 @@ void afficheAnimale(Animal a, int choix){
 	printf("Nom : %s\n", a.nom);
 	printf("id : %d\n", a.id);
 	printf("annee : %d\n", a.annee);
-	printf("poids : %2.f\n", a.poids);
-	int b = a.espece;
+	printf("poids : %.2f kg\n", a.poids);
 	switch(a.espece){
         case 1 :
        		printf("Espece : chien \n");
@@ -55,7 +54,7 @@ void afficheAnimale(Animal a, int choix){
 	
     int sauvegarder_animaux() {
         FILE *f = fopen("animaux.txt", "w");  
-        if (!f) {  
+        if (f== NULL) {  
             printf("Erreur lors de l'ouverture du fichier de sauvegarde.\n");
             return 1;
         }
@@ -159,8 +158,8 @@ void rechercher_animaux() {
     while (getchar() != '\n');
     if (critere_nom == 1) {
         printf("Entrez le nom : ");
-        fgets(a.nom, MAX,stdin);
-        a.nom[strcspn(a.nom, "\n")] = '\0';
+        fgets(nom, MAX,stdin);
+        nom[strcspn(nom, "\n")] = '\0';
     }
 
     printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
