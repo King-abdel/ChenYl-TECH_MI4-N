@@ -1,4 +1,219 @@
-#include "FichierStructure.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#define NbAnimal 50
+#define MAX 1000
+
+typedef enum{
+    chien = 1, 
+    chats, 
+    hamsters,
+    autruche
+}Espece;
+
+typedef struct{
+    int id;
+    int annee;
+    float poids;
+    char nom[MAX];
+    char descrip[MAX];
+    Espece espece;
+}Animal;
+
+Animal refuge[NbAnimal];
+int nb_animal= 0;
+int prochain_id=1;
+
+
+void afficheAnimale(Animal a, int choix){
+	printf("-----\n");
+	printf("Nom : %s\n", a.nom);
+	printf("id : %d\n", a.id);
+	printf("annee : %d\n", a.annee);
+	printf("poids : %2.f\n", a.poids);
+	int b = a.espece;
+	switch(a.espece){
+        case 1 :
+       		printf("Espece : chien \n");
+       		break;
+        case 2 :
+       		printf("Espece : chat \n");
+      		break;
+        case 3 :
+        	printf("Espece : Hamster \n");
+        	break;
+        case 4 :
+        	printf("Espece : Autruche \n");
+        	break;
+	}
+	if(choix==1){  
+        printf("description : %s\n", a.descrip);
+	}
+    printf("-----\n");   
+    }
+	
+    int sauvegarder_animaux() {
+        FILE *f = fopen("animaux.txt", "w");  
+        if (!f) {  
+            printf("Erreur lors de l'ouverture du fichier de sauvegarde.\n");
+            return 1;
+        }
+        
+        for (int i = 0; i < nb_animal; i++) {
+            Animal a = refuge[i];
+            fprintf(f, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
+        }
+        
+        fclose(f);  
+        return 0;
+    }
+
+void ajouter_animal(){ 
+    if (nb_animal >= NbAnimal) {
+    	printf("Capacité maximale atteinte.\n");
+	}
+	else{	
+		Animal a;
+		a.id = prochain_id++;
+		
+		printf("Nom : \n");
+		fgets(a.nom, MAX,stdin);
+		a.nom[strcspn(a.nom, "\n")] = '\0';
+
+	do{
+		printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : \n");
+		scanf("%d", &a.espece);
+		while (getchar() != '\n');
+	} while(a.espece<1 || a.espece>4);
+
+	do{
+		printf("Année de naissance : \n");
+		scanf("%d", &a.annee);
+		while (getchar() != '\n');
+	} while(a.annee<0);
+	
+	do{
+		printf("Poids (kg) : \n");
+		scanf("%f", &a.poids);
+		while (getchar() != '\n');
+	} while(a.poids<=0);   
+
+	int choix;
+	do{
+		printf("Voulez-vous ajouter une description : 1 oui 2 non \n");
+		scanf("%d", &choix);
+		while (getchar() != '\n');
+	} while(choix!=1 && choix!=2);
+		if (choix == 1){
+    			printf("Description : \n");
+    			fgets(a.descrip, MAX,stdin);
+            		a.descrip[strcspn(a.descrip, "\n")] = '\0';
+		}
+	refuge[nb_animal++] = a;
+        afficheAnimale(a, choix);
+
+    printf("✅ Animal ajouté avec succès.\n");
+    sauvegarder_animaux();
+}}
+
+
+void adopter_animal() {
+    int id;
+    do{
+	    printf("ID de l'animal à adopter : ");
+	    scanf("%d", &id);
+	    while (getchar() != '\n');
+    }while(id<=0);
+
+    int trouvé = 0;
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].id == id) {
+            trouvé = 1;
+            printf("Animal trouvé :\n");
+            afficheAnimale(refuge[i], 1);
+            for (int j = i; j < nb_animal - 1; j++) {
+                refuge[j] = refuge[j + 1];
+            }
+            nb_animal--;
+            printf("Animal avec ID %d adopté avec succès.\n", id);
+            break;
+        }
+    }
+	
+    if (trouvé==0) {
+        printf("Aucun animal trouvé avec l'ID %d.\n", id);
+    }
+    
+    sauvegarder_animaux();
+}
+
+void rechercher_animaux() {
+    Animal a;
+    char nom[MAX];
+    int filtre_espece, age_type;
+    int critere_nom = 0, critere_espece = 0, critere_age = 0;
+
+    printf("Rechercher par nom ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_nom);
+    while (getchar() != '\n');
+    if (critere_nom == 1) {
+        printf("Entrez le nom : ");
+        fgets(a.nom, MAX,stdin);
+        a.nom[strcspn(a.nom, "\n")] = '\0';
+    }
+
+    printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_espece);
+    while (getchar() != '\n');
+    if (critere_espece == 1) {
+        printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
+        scanf("%d", &filtre_espece);
+        while (getchar() != '\n');
+    }
+
+    printf("Rechercher par type d'âge ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_age);
+    while (getchar() != '\n');
+    if (critere_age == 1) {
+        printf("1: Jeune (<2 ans), 2: Senior (>10 ans) : ");
+        scanf("%d", &age_type);
+        while (getchar() != '\n');
+    }
+
+    int trouve = 0;
+    int annee_courante = 2025;
+    for (int i = 0; i < nb_animal; i++) {
+        a = refuge[i];
+        int age = annee_courante - a.annee;
+
+        if ((critere_nom == 1 && strcmp(a.nom, nom) == 0) ||
+            (critere_espece ==1 && a.espece == filtre_espece) ||
+            (critere_age == 1 && ((age_type == 1 && age <= 2) || (age_type == 2 && age >= 10)))){
+            afficheAnimale(a, 1);
+            trouve = 1;
+        }
+    }
+
+    if (trouve==0){
+        printf("Aucun animal ne correspond aux critères.\n");
+    }
+}
+
+
+void charger_animaux() {
+    FILE *f = fopen("animaux.txt", "r");  
+    if (!f) return;  
+
+    Animal a;
+    while (fscanf(f, "%d;%d;%f;%d;%[^;];%[^\n]\n", &a.id, &a.annee, &a.poids, (int*)&a.espece, a.nom, a.descrip) == 6) {
+        refuge[nb_animal++] = a;  
+        if (a.id >= prochain_id) 
+            prochain_id = a.id + 1;
+    }
+    fclose(f);  
+}
+
 
 void afficherInventaireNbDesc() {
     int compteur[4] = {0}; 
@@ -39,3 +254,88 @@ void afficherInventaireNbDesc() {
     }
 }
 
+int calculer_charge_nettoyage_hebdomadaire() {
+    int total_minutes = 0;
+
+    for (int i = 0; i < nb_animal; i++) {
+        switch (refuge[i].espece) {
+            case hamsters:
+                 total_minutes += (10 * 7) + 20; // 10 min/jour + 20 min/semaine
+                 break;
+            case chats:
+                total_minutes += (10 * 7) + 20; // 10 min/jour + 20 min/semaine
+                break;
+            case autruche:
+                total_minutes += (20 * 7) + 45; // 20 min/jour + 45 min/semaine
+                break;
+            case chien:
+                total_minutes += (5 * 7) + 20;  // 5 min/jour + 20 min/semaine
+                break;
+            default:
+                break;
+        }
+    }
+ int nb_vides = NbAnimal - nb_animal;
+    total_minutes += nb_vides * 14;
+       return total_minutes;
+}
+
+
+
+int afficherMenu() {
+    printf("🐾 === ChenYl-Tech - Menu Principal === 🐾\n");
+    printf("1. Ajouter un animal\n");
+    printf("2. Rechercher un animal\n");
+    printf("3. Supprimer un animal (adoption)\n");
+    printf("4. Afficher l'inventaire\n");
+    printf("5. Afficher  charge travail\n");
+    printf("6. Quitter\n");
+    printf("Choix : ");
+	
+    int choix;
+
+        scanf("%d", &choix);
+        while (getchar() != '\n');
+	    
+        switch (choix) {
+            case 1:
+                printf("→ [Ajouter un animal] 🐶\n");
+                ajouter_animal();
+                break;
+            case 2:
+                printf("→ [Rechercher un animal] 🔍\n");
+                rechercher_animaux();
+                break;
+            case 3:
+                printf("→ [Supprimer un animal] 🚪\n");
+                adopter_animal();
+                break;
+            case 4:
+                printf("→ [Afficher l'inventaire] 📋\n");
+                afficherInventaireNbDesc();
+                break;
+            case 5:
+                printf("→ [Afficher  charge travail] 🧳\n");
+                int a = calculer_charge_nettoyage_hebdomadaire();
+                printf("%d\n", a);
+                break;
+            case 6:
+                printf("Au revoir ! 👋\n");
+                break;
+            default:
+                printf("Choix invalide, réessaie ! ❌\n");
+                break;
+    }
+    return choix;
+}
+
+
+int main(){
+    int a=0;
+    charger_animaux();
+    while(a != 6){
+	   a= afficherMenu();
+    }
+	
+return 0;
+}
