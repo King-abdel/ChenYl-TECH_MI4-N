@@ -1,4 +1,4 @@
-
+#include "FichierStructure.h"
 
 void DAY_FOOD() {
     int annee_courante;
