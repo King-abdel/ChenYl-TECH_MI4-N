@@ -423,7 +423,7 @@ int afficherMenu() {
     printf("                              |   8. ❌ Quitter le programme                                 |\n");
     printf("                              |______________________________________________________________|\n");
     printf("\033[0m\n");
-    printf("\n✅ Veuillez Sélectionner Une Action (Tapez 7 Pour Quitter ❌) : ");
+    printf("\n✅ Veuillez Sélectionner Une Action (Tapez 8 Pour Quitter ❌) : ");
 	
     int choix;
 
