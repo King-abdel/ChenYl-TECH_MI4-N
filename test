@@ -285,7 +285,7 @@ void day_food() {
         printf("\n Entrez l'année actuelle : ");
         scanf("%d", &annee_courante);
         while (getchar() != '\n');
-    }while(anne_courante<0);
+    }while(annee_courante<0);
 
     float total_croquettes_kg = 0.0;
 
