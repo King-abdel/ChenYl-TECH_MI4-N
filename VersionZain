@@ -31,7 +31,7 @@ void afficheAnimale(Animal a, int choix){
 	printf("Nom : %s\n", a.nom);
 	printf("id : %d\n", a.id);
 	printf("annee : %d\n", a.annee);
-	printf("poids : %f\n", a.poids);
+	printf("poids : %2.f\n", a.poids);
 	int b = a.espece;
 	switch(a.espece){
         case 1 :
@@ -57,7 +57,7 @@ void afficheAnimale(Animal a, int choix){
         FILE *f = fopen("animaux.txt", "w");  
         if (!f) {  
             printf("Erreur lors de l'ouverture du fichier de sauvegarde.\n");
-            return;
+            return 1;
         }
         
         for (int i = 0; i < nb_animal; i++) {
@@ -74,61 +74,56 @@ void ajouter_animal(){
     	printf("Capacité maximale atteinte.\n");
 	}
 	else{	
-	Animal a;
-	a.id = prochain_id++;
-	
-	printf("Nom : \n");
-	fgets(a.nom, MAX,stdin);
-    a.nom[strcspn(a.nom, "\n")] = '\0';
-	
+		Animal a;
+		a.id = prochain_id++;
+		
+		printf("Nom : \n");
+		fgets(a.nom, MAX,stdin);
+		a.nom[strcspn(a.nom, "\n")] = '\0';
+
 	do{
 		printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : \n");
 		scanf("%d", &a.espece);
-        while (getchar() != '\n');
-	}while(a.espece<1 || a.espece>4);
+		while (getchar() != '\n');
+	} while(a.espece<1 || a.espece>4);
 
 	do{
 		printf("Année de naissance : \n");
 		scanf("%d", &a.annee);
-        while (getchar() != '\n');
-	}while(a.annee<0);
+		while (getchar() != '\n');
+	} while(a.annee<0);
 	
 	do{
 		printf("Poids (kg) : \n");
 		scanf("%f", &a.poids);
-        while (getchar() != '\n');
-	}while(a.poids<=0);   
+		while (getchar() != '\n');
+	} while(a.poids<=0);   
 
 	int choix;
 	do{
 		printf("Voulez-vous ajouter une description : 1 oui 2 non \n");
 		scanf("%d", &choix);
-        while (getchar() != '\n');
-	}while(choix!=1 && choix!=2);
-		if(choix == 1){
-			printf("Description : \n");
-			fgets(a.descrip, MAX,stdin);
-            a.descrip[strcspn(a.descrip, "\n")] = '\0';
+		while (getchar() != '\n');
+	} while(choix!=1 && choix!=2);
+		if (choix == 1){
+    			printf("Description : \n");
+    			fgets(a.descrip, MAX,stdin);
+            		a.descrip[strcspn(a.descrip, "\n")] = '\0';
 		}
-	
 	refuge[nb_animal++] = a;
+        afficheAnimale(a, choix);
 
-	if (choix == 1){
-        afficheAnimale(a, 1);
-    }
-    else{
-        afficheAnimale(a, 0);
-    }
     printf("✅ Animal ajouté avec succès.\n");
     sauvegarder_animaux();
-}
-}
+}}
+
+
 void adopter_animal() {
     int id;
     do{
-    printf("ID de l'animal à adopter : ");
-    scanf("%d", &id);
-    while (getchar() != '\n');
+	    printf("ID de l'animal à adopter : ");
+	    scanf("%d", &id);
+	    while (getchar() != '\n');
     }while(id<=0);
 
     int trouvé = 0;
@@ -145,10 +140,11 @@ void adopter_animal() {
             break;
         }
     }
-
+	
     if (trouvé==0) {
         printf("Aucun animal trouvé avec l'ID %d.\n", id);
     }
+    
     sauvegarder_animaux();
 }
 
@@ -218,6 +214,46 @@ void charger_animaux() {
     fclose(f);  
 }
 
+
+void afficherInventaireNbDesc() {
+    int compteur[4] = {0}; 
+    int indices[4] = {0, 1, 2, 3}; 
+
+   
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].espece >= chien && refuge[i].espece <= autruche) {
+            compteur[refuge[i].espece - 1]++;
+        }
+    }
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = i + 1; j < 4; j++) {
+            if (compteur[i] < compteur[j]) {
+                
+                int tmp = compteur[i];
+                compteur[i] = compteur[j];
+                compteur[j] = tmp;
+                
+                int tmpIdx = indices[i];
+                indices[i] = indices[j];
+                indices[j] = tmpIdx;
+            }
+        }
+    }
+
+
+    const char *nomsEspeces[4] = { "Chien 🐶", "Chat 🐱", "Hamster 🐹", "Autruche 🐦" };
+
+    printf("\n📦 Nombre total d'animaux : %d\n", nb_animal);
+    printf("📊 Détail par espèce (ordre décroissant) :\n");
+
+    for (int i = 0; i < 4; i++) {
+        if (compteur[i] > 0) {
+            printf("   - %s : %d\n", nomsEspeces[indices[i]], compteur[i]);
+        }
+    }
+}
+
 int calculer_charge_nettoyage_hebdomadaire() {
     int total_minutes = 0;
 
@@ -246,7 +282,7 @@ int calculer_charge_nettoyage_hebdomadaire() {
 
 
 
-void afficherMenu() {
+int afficherMenu() {
     printf("🐾 === ChenYl-Tech - Menu Principal === 🐾\n");
     printf("1. Ajouter un animal\n");
     printf("2. Rechercher un animal\n");
@@ -276,9 +312,12 @@ void afficherMenu() {
                 break;
             case 4:
                 printf("→ [Afficher l'inventaire] 📋\n");
+                afficherInventaireNbDesc();
                 break;
             case 5:
                 printf("→ [Afficher  charge travail] 🧳\n");
+                int a = calculer_charge_nettoyage_hebdomadaire();
+                printf("%d\n", a);
                 break;
             case 6:
                 printf("Au revoir ! 👋\n");
@@ -292,10 +331,10 @@ void afficherMenu() {
 
 
 int main(){
-    int a;
+    int a=0;
     charger_animaux();
     while(a != 6){
-	    afficherMenu();
+	   a= afficherMenu();
     }
 	
 return 0;
