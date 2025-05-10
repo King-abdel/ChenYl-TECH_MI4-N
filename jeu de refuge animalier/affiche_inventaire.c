@@ -1,5 +1,4 @@
 #include "FichierStructure.h"
-
 void afficherInventaireNbDesc() {
     int compteur[4] = {0}; 
     int indices[4] = {0, 1, 2, 3}; 
@@ -38,4 +37,3 @@ void afficherInventaireNbDesc() {
         }
     }
 }
-
