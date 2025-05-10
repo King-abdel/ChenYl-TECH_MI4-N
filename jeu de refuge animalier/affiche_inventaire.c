@@ -1,4 +1,5 @@
 #include "FichierStructure.h"
+#include "FichierSource.h"
 
 // Les espèces sont affichées par ordre décroissant de leur nombre
 void afficherInventaireNbDesc() {
