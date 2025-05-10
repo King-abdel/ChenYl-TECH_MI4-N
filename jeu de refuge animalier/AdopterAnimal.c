@@ -28,5 +28,5 @@ void adopter_animal() {
         printf("Aucun animal trouvé avec l'ID %d.\n", id);
     }
     
-    sauvegarder_animaux();
+    sauvegarder_animaux(); // sauvegarder la suppression
 }
