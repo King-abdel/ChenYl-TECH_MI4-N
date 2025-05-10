@@ -1,6 +1,5 @@
 #ifndef FICHIER_SOURCE_H
 #define FICHIER_SOURCE_H
-
 #include "FichierStructure.h"
 
 void afficherBanniere();
