@@ -4,7 +4,7 @@
 // Fonction pour modifier les informations d'un animal à partir de son ID
 void modifierAnimal() {
     int id;           // ID saisi par l'utilisateur
-    int trouve = 0;   // Booléen pour savoir si l'animal a été trouvé
+    int trouve = 0;   // marqeur pour savoir si l'animal a été trouvé
 
     // Demande un ID valide (> 0)
     do {
