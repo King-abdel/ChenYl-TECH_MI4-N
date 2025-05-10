@@ -21,8 +21,8 @@ typedef struct{
     Espece espece;
 }Animal;
 
-Animal refuge[NbAnimal];
-int nb_animal= 0;
+Animal refuge[NbAnimal];        // tableau d'animal qui stocke les animaux de tout le refuge
+int nb_animal= 0;               // initialise le nombre d'animaux à 0
 int prochain_id=1;
 
 
@@ -52,21 +52,51 @@ void afficheAnimale(Animal a, int choix){
     printf("-----\n");   
     }
 	
-    int sauvegarder_animaux() {
-        FILE *f = fopen("animaux.txt", "w");  
-        if (f== NULL) {  
-            printf("Erreur lors de l'ouverture du fichier de sauvegarde.\n");
-            return 1;
-        }
-        
-        for (int i = 0; i < nb_animal; i++) {
-            Animal a = refuge[i];
-            fprintf(f, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
-        }
-        
-        fclose(f);  
-        return 0;
+   #include <sys/stat.h>
+#include <sys/types.h>
+
+
+int sauvegarder_animaux() {
+    mkdir("refuge", 0777);
+    mkdir("refuge/sauvegarde", 0777);
+
+    time_t now = time(NULL);
+    struct tm *t = localtime(&now);
+
+    char filename[200];
+    sprintf(filename, "refuge/sauvegarde/animaux_%04d-%02d-%02d.txt",
+            t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
+
+    FILE *f = fopen(filename, "w");
+    if (f == NULL) {
+        printf("❌ Erreur : impossible d’ouvrir %s\n", filename);
+        return 1;
     }
+
+    for (int i = 0; i < nb_animal; i++) {
+        Animal a = refuge[i];
+        fprintf(f, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
+    }
+
+    fclose(f);
+    printf("💾 Sauvegarde réussie dans %s\n", filename);
+    return 0;
+}
+
+
+void charger_animaux() {
+    FILE *f = fopen("animaux.txt", "r");  
+    if (!f) return;  
+ 
+    Animal a;
+    while (fscanf(f, "%d;%d;%f;%d;%[^;];%[^\n]\n", &a.id, &a.annee, &a.poids, (int*)&a.espece, a.nom, a.descrip) == 6) {
+        refuge[nb_animal++] = a;  
+        if (a.id >= prochain_id) 
+            prochain_id = a.id + 1;
+    }
+    fclose(f);  
+}
+
 
 void ajouter_animal(){ 
     if (nb_animal >= NbAnimal) {
@@ -77,13 +107,13 @@ void ajouter_animal(){
 		a.id = prochain_id++;
 		
 		printf("Nom : \n");
-		fgets(a.nom, MAX,stdin);
-		a.nom[strcspn(a.nom, "\n")] = '\0';
+		fgets(a.nom, MAX,stdin);                 // lire avec possibilté de mettre des espaces
+		a.nom[strcspn(a.nom, "\n")] = '\0';     // enlever le \n de la chaîne nom 
 
 	do{
 		printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : \n");
 		scanf("%d", &a.espece);
-		while (getchar() != '\n');
+		while (getchar() != '\n');              // supprimer le \n dans le tampon
 	} while(a.espece<1 || a.espece>4);
 
 	do{
@@ -109,11 +139,11 @@ void ajouter_animal(){
     			fgets(a.descrip, MAX,stdin);
             		a.descrip[strcspn(a.descrip, "\n")] = '\0';
 		}
-	refuge[nb_animal++] = a;
+	refuge[nb_animal++] = a;    // incrémenter le nombre d'animal 
         afficheAnimale(a, choix);
 
-    printf("✅ Animal ajouté avec succès.\n");
-    sauvegarder_animaux();
+    printf("✅ Animal ajouté avec succès.\n");  
+    sauvegarder_animaux();  // sauvegarder l'ajout
 }}
 
 
@@ -126,13 +156,13 @@ void adopter_animal() {
     }while(id<=0);
 
     int trouvé = 0;
-    for (int i = 0; i < nb_animal; i++) {
-        if (refuge[i].id == id) {
-            trouvé = 1;
+    for (int i = 0; i < nb_animal; i++) {   // parcours tout les animaux
+        if (refuge[i].id == id) {   
+            trouvé = 1;                    
             printf("Animal trouvé :\n");
             afficheAnimale(refuge[i], 1);
-            for (int j = i; j < nb_animal - 1; j++) {
-                refuge[j] = refuge[j + 1];
+            for (int j = i; j < nb_animal - 1; j++) {    
+                refuge[j] = refuge[j + 1];                        // on réajuste les indices du tableaux 
             }
             nb_animal--;
             printf("Animal avec ID %d adopté avec succès.\n", id);
@@ -149,7 +179,7 @@ void adopter_animal() {
 
 void rechercher_animaux() {
     Animal a;
-    char nom[MAX];
+    char nom[MAX] ={0};
     int filtre_espece, age_type;
     int critere_nom = 0, critere_espece = 0, critere_age = 0;
 
@@ -279,54 +309,51 @@ void modifierAnimal() {
 }
 
 
+// Fonction qui calcule la quantité totale de croquettes nécessaire pour nourrir tous les animaux du refuge en un jour
 void day_food() {
     int annee_courante;
-    do{
+
+    // Demande à l'utilisateur de saisir l'année actuelle (doit être positive)
+    do {
         printf("\n Entrez l'année actuelle : ");
         scanf("%d", &annee_courante);
+
+        // Cette ligne permet de lire et d'ignorer les caractères restants (comme la touche Entrée)
+        // pour éviter des erreurs lors de la prochaine lecture clavier
         while (getchar() != '\n');
-    }while(annee_courante<0);
+    } while (annee_courante < 0); // Recommence si l'année est invalide
 
-    float total_croquettes_kg = 0.0;
+    float total_croquettes_kg = 0.0; // Initialisation du total de croquettes en kg
 
+    // Parcours de tous les animaux présents dans le refuge
     for (int i = 0; i < nb_animal; i++) {
-        Animal a = refuge[i];
-        int age = annee_courante - a.annee;
+        Animal a = refuge[i]; // Récupère l'animal courant
+        int age = annee_courante - a.annee; // Calcule son âge en années
 
+        // Selon l'espèce de l'animal, on ajoute une quantité différente de croquettes
         switch (a.espece) {
             case hamsters:
-                total_croquettes_kg += 0.02; // 20g
+                total_croquettes_kg += 0.02; // Un hamster mange environ 20g par jour
                 break;
             case autruche:
-                total_croquettes_kg += 2.5;   // 2.5kg
+                total_croquettes_kg += 2.5; // Une autruche mange environ 2.5kg par jour
                 break;
             case chats:
             case chien:
                 if (age < 2) {
-                    total_croquettes_kg += 0.5; // 500g
+                    // Jeunes chiens ou chats (moins de 2 ans) mangent 500g par jour
+                    total_croquettes_kg += 0.5;
                 } else {
-                    total_croquettes_kg += a.poids * 0.10; // 10% du poids
+                    // Sinon, ils mangent l'équivalent de 10% de leur poids
+                    total_croquettes_kg += a.poids * 0.10;
                 }
                 break;
         }
     }
 
+    // Affichage du résultat final
     printf("\n🍽️  Quantité totale de croquettes nécessaire aujourd'hui : %.2f kg\n", total_croquettes_kg);
 }
-
-void charger_animaux() {
-    FILE *f = fopen("animaux.txt", "r");  
-    if (!f) return;  
-
-    Animal a;
-    while (fscanf(f, "%d;%d;%f;%d;%[^;];%[^\n]\n", &a.id, &a.annee, &a.poids, (int*)&a.espece, a.nom, a.descrip) == 6) {
-        refuge[nb_animal++] = a;  
-        if (a.id >= prochain_id) 
-            prochain_id = a.id + 1;
-    }
-    fclose(f);  
-}
-
 
 void afficherInventaireNbDesc() {
     int compteur[4] = {0}; 
