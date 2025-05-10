@@ -394,7 +394,7 @@ void afficherInventaireNbDesc() {
     }
 }
 
-int calculer_charge_nettoyage_hebdomadaire() {
+int day_clean() {
     int total_minutes = 0;
 
     for (int i = 0; i < nb_animal; i++) {
