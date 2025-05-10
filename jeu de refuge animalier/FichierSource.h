@@ -12,6 +12,7 @@ int calculer_charge_nettoyage_hebdomadaire();
 void day_food();
 void afficherInventaireNbDesc();
 void modifierAnimal();
+void charger_animaux();
 #endif 
 
 
