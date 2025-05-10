@@ -1,3 +1,4 @@
+#include "FichierStructure.h"
 void afficherBanniere() {
     printf("\033[1;34m"); 
      printf("\n");
