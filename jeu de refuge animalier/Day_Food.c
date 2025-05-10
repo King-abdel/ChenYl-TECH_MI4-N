@@ -1,4 +1,5 @@
 #include "FichierStructure.h"
+#include "FichierSource.h"
 
 // Fonction qui calcule la quantité totale de croquettes nécessaire pour nourrir tous les animaux du refuge en un jour
 void day_food() {
