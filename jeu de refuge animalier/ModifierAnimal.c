@@ -1,12 +1,13 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
 
+
 void modifierAnimal() {
-    int id;
+    int id;   
     int trouve = 0;
 
     do {
-        printf("ID de l'animal à modifier : ");
+        printf("ID de l'animal à modifier : ");        //identifier l'animal par son id
         scanf("%d", &id);
         while (getchar() != '\n');
     } while (id <= 0);
@@ -70,5 +71,5 @@ void modifierAnimal() {
     if (trouve ==0) {
         printf("❌ Aucun animal trouvé avec l'ID %d.\n", id);
     }
-    sauvegarder_animaux();
+    sauvegarder_animaux();    //sauvegarder l'animal modifié
 }
