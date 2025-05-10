@@ -1,4 +1,4 @@
-#ifndef FICHIERSTRUCTURE_H  
+#include "FichierStructure"
 
 // Fonction pour sauvegarder la liste des animaux dans un fichier texte
 int sauvegarder_animaux() {
@@ -38,4 +38,4 @@ int sauvegarder_animaux() {
     printf("💾 Sauvegarde réussie dans %s\n", filename);
     return 0;  // Retourne 0 pour indiquer que tout s'est bien passé
 }
-#endif
+
