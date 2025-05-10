@@ -4,6 +4,7 @@
 #include "FichierStructure.h"
 
 void afficherBanniere();
+int afficherMenu();
 void ajouter_animal();
 int RechercheAnimal();
 void afficheAnimale (Animal a);
