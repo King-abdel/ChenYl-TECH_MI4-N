@@ -1,4 +1,4 @@
-
+#include "FichierStructure.h"
 int afficherMenu() {
     printf("\n\033[1;3m"); 
     printf("                              ======================== MENU PRINCIPAL ========================\n");
