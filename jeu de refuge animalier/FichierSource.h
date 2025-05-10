@@ -13,6 +13,7 @@ void day_food();
 void afficherInventaireNbDesc();
 void modifierAnimal();
 void charger_animaux();
+int sauvegarder_animaux();
 #endif 
 
 
