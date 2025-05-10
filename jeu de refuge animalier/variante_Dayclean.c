@@ -1,6 +1,5 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
-// Fonction qui calcule la charge de nettoyage hebdomadaire totale du refuge
 
 // Le calcul dépend du type d’animal et inclut aussi les cages vides
 int calculer_charge_nettoyage_hebdomadaire() {
@@ -12,27 +11,26 @@ int calculer_charge_nettoyage_hebdomadaire() {
             // Pour chaque espèce, on ajoute le temps de nettoyage correspondant
 
             case hamsters:
-                // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdo
+                // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
                 total_minutes += (10 * 7) + 20;
                 break;
 
             case chats:
-                // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdo
+                // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
                 total_minutes += (10 * 7) + 20;
                 break;
 
             case autruche:
-                // 20 minutes par jour * 7 jours + 45 minutes de nettoyage hebdo
+                // 20 minutes par jour * 7 jours + 45 minutes de nettoyage hebdomadaire
                 total_minutes += (20 * 7) + 45;
                 break;
 
             case chien:
-                // 5 minutes par jour * 7 jours + 20 minutes de nettoyage hebdo
+                // 5 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
                 total_minutes += (5 * 7) + 20;
                 break;
 
             default:
-                //  En Cas de sécurité 
                 break;
         }
     }
