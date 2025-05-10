@@ -1,5 +1,5 @@
 #include "FichierStructure.h"
-
+#include "FichierSource.h"
 void modifierAnimal() {
     int id;
     int trouve = 0;
