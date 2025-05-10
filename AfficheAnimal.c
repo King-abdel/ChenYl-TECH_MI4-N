@@ -1,5 +1,5 @@
-
-
+#include "FichierStructure.h"
+#include "FichierSource.h"
 
 void afficheAnimale(Animal a, int choix){
 	printf("-----\n");
