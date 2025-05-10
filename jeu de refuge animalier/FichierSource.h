@@ -10,7 +10,7 @@ void ajouter_animal();
 int RechercheAnimal();
 void adopter_animal();
 void afficheAnimale (Animal a);
-int day_clean();
+int Day_clean();
 void day_food();
 void afficherInventaireNbDesc();
 void modifierAnimal();
