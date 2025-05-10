@@ -1,5 +1,5 @@
 #include "FichierStructure.h"
-
+#include "FichierSource.h"
 
 void adopter_animal() {
     int id;
