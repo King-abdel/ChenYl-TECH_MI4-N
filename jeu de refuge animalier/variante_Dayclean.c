@@ -2,7 +2,7 @@
 #include "FichierSource.h"
 
 // Le calcul dépend du type d’animal et inclut aussi les cages vides
-int Day_clean() {
+int day_clean() {
     int total_minutes = 0; // Initialisation du temps total en minutes
 
     // Parcours de tous les animaux actuellement dans le refuge
