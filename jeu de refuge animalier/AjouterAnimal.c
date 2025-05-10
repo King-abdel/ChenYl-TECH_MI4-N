@@ -1,5 +1,5 @@
 #include "FichierStructure.h"
-
+#include "FichierSource.h"
 void ajouter_animal(){ 
     if (nb_animal >= NbAnimal) {
     	printf("Capacité maximale atteinte.\n");
