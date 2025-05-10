@@ -12,27 +12,27 @@ void ajouter_animal() { 		// Fonction pour ajouter un animal au refuge
         // Saisie du nom de l'animal
         printf("Nom : \n");
         fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
-        a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' 
+        a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
 
         // Saisie du type d'espèce 
         do {
             printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : \n");
             scanf("%d", &a.espece);
-            while (getchar() != '\n'); // supprime le '\n'
+            while (getchar() != '\n');  // supprimer le '\n' du tampon
         } while(a.espece < 1 || a.espece > 4);
 
         // Saisie de l’année de naissance
         do {
             printf("Année de naissance : \n");
             scanf("%d", &a.annee);
-            while (getchar() != '\n');  // enlève le '\n' 
+            while (getchar() != '\n');  
         } while(a.annee < 0);
         
         // Saisie du poids 
         do {
             printf("Poids (kg) : \n");
             scanf("%f", &a.poids);
-            while (getchar() != '\n'); // enlève le '\n'
+            while (getchar() != '\n');
         } while(a.poids <= 0);   
 
         int choix;
