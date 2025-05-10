@@ -36,7 +36,7 @@ Nous avons fait des points réguliers pour vérifier la cohérence du projet et 
 3.2 Outils utilisés
 - Visual Studio Code pour coder
 - GitHub pour la gestion de version
-- WhatsApp pour la communication
+- WhatsApp et Discord pour la communication
 
 4. Résultats obtenus
 L’application finale permet de gérer un refuge de manière fluide grâce aux fonctionnalités suivantes :
