@@ -1,3 +1,5 @@
+#include "FichierStructure.h"
+#include "FichierSource.h"
 
 int main(){
     int a=0;
