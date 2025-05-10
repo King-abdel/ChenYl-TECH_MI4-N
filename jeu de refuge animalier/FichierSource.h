@@ -9,5 +9,6 @@ void afficheAnimale (Animal a);
 void adopter_animal();
 void afficherInventaireNbDesc();
 int calculer_charge_nettoyage_hebdomadaire();
+void modifierAnimal();
 
 #endif 
