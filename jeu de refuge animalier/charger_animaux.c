@@ -1,3 +1,4 @@
+#include "FichierStructure.h"
 void charger_animaux() {
     FILE *f = fopen("animaux.txt", "r");  
     if (!f) return;  
