@@ -1,5 +1,5 @@
 #include "FichierStructure.h"
-
+#include "FichierSource.h"
 // Fonction qui calcule la charge de nettoyage hebdomadaire totale du refuge
 
 // Le calcul dépend du type d’animal et inclut aussi les cages vides
