@@ -7,12 +7,12 @@ void afficherBanniere();
 int afficherMenu();
 void ajouter_animal();
 int RechercheAnimal();
-void afficheAnimale (Animal a);
 void adopter_animal();
-
-void afficherInventaireNbDesc();
-void day_food();
+void afficheAnimale (Animal a);
 int calculer_charge_nettoyage_hebdomadaire();
+void day_food();
+void afficherInventaireNbDesc();
 void modifierAnimal();
-
 #endif 
+
+
