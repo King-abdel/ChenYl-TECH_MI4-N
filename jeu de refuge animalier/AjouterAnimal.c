@@ -32,6 +32,7 @@ void ajouter_animal(){
 	a.id = prochain_id++;
 	
 	printf("Nom : ");
+	
 	scanf("%s", a.nom);
 	
 	do{

@@ -14,11 +14,10 @@ int afficherMenu() {
     printf("5. Afficher  charge travail\n");
     printf("6. Quitter\n");
     printf("Choix : ");
-	
-    int choix;
 
-        scanf("%d", &choix);
-	    
+    int choix;
+    scanf("%d\n", &choix);
+        
         switch (choix) {
             case 1:
                 printf("→ [Ajouter un animal] 🐶\n");
@@ -38,7 +37,7 @@ int afficherMenu() {
                 break;
             case 5:
                 printf("→ [Afficher  charge travail] 🧳\n");
-                calculer_charge_nettoyage_hebdomadaire();
+                printf("le temps totale de nettoyage est %d min \n",calculer_charge_nettoyage_hebdomadaire());
                 break;
             case 6:
                 printf("Au revoir ! 👋\n");

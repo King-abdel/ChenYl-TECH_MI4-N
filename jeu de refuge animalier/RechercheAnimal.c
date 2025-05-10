@@ -52,7 +52,7 @@ void DecoupageTabAge(Animal *enfant[], Animal *jeune[], Animal *senior[], int *e
             (*e)++;
         } else if (age <= 10) {
             jeune[*j] = &refuge[i];
-            (*j++);
+            (*j)++;
         } else {
             senior[*s] = &refuge[i];
             (*s)++;
@@ -65,63 +65,135 @@ void DecoupageTabAge(Animal *enfant[], Animal *jeune[], Animal *senior[], int *e
     int RechercheAnimal(){
         char n[50];
         Espece e;
-        int i, age, naissance;
+        int critere_nom , critere_espece, critere_age;
+        int i, age_type, naissance;
         int a, b, c;
         int annee_courante = AnneeCourante();
         Animal *enfant[NbAnimal];  
         Animal *jeune[NbAnimal];
         Animal *senior[NbAnimal];
         
-        printf("Rentrer le nom de l'aniaml ?\n");
-        scanf("%s", n);
-        do {
-            printf("Quelle est l'année de naissance de l'animal ? ");
-            scanf("%d", &naissance);
-            if (naissance < 1900 || naissance > annee_courante) {
-                printf("Année invalide ! Réessayez.\n");
-            }
-        } while (naissance < 1900 || naissance > annee_courante);
-    
-        age = annee_courante - naissance;
-        DecoupageTabAge(enfant, jeune, senior, &a, &b, &c);
+        
+    printf("Rechercher par nom ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_nom);
+    while (getchar() != '\n');
+    if (critere_nom == 1) {
+        printf("Entrez le nom : ");
+        fgets(n, 50,stdin);
+        n[strcspn(n, "\n")] = '\0';
+    }
+
+    printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_espece);
+    while (getchar() != '\n');
+    if (critere_espece == 1) {
         e = ChoisirEspece();
-    
-        // je sais pas comment faire pour que à chaque fois que le joueur entre une information. je valide.
-    
-        if(age < 2){
+        while (getchar() != '\n');
+    }
+
+    printf("Rechercher par type d'âge ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_age);
+    while (getchar() != '\n');
+    if (critere_age == 1) {
+        printf("1: Enfant (<2 ans), 2: Senior (>10 ans), 3: Jeune (>2 ans && <10 ans)  ");
+        scanf("%d", &age_type);
+        while (getchar() != '\n');
+    }
+
+    DecoupageTabAge(enfant, jeune, senior, &a, &b, &c);
+
+    if(critere_age == 0){
+        for(i = 0; i< nb_animal; i++){
+            if(critere_nom == 1 && strcmp(refuge[i].nom, n) == 0){
+                    if(critere_espece == 1 && refuge[i].espece == e ){
+                        afficheAnimale(refuge[i]);
+                        return 0;
+                    }
+                    else if(critere_espece == 0){
+                        afficheAnimale(refuge[i]);
+                        return 0;
+                    }
+            }
+            else if(critere_nom == 0 && critere_espece == 1 ){
+                if(refuge[i].espece == e){
+                    afficheAnimale(refuge[i]);
+                    return 0;
+                }
+            }
+        }
+        printf("Aucan animal trouvé !");
+        return 1;
+    }
+        
+    else if(critere_age == 1){
+        if(age_type == 1){
             printf("l'animal est un enfant \n ");
             for(i = 0; i < a; i++){
-                if(strcmp(enfant[i]->nom, n) == 0 && enfant[i]->espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
-                        printf("l'animal existe, Voilà ses informations :\n");
+                if(critere_nom == 1 && strcmp(enfant[i]->nom, n) == 0){
+                    if(critere_espece == 1 && enfant[i]->espece == e ){
+                        afficheAnimale(*enfant[i]);
+                        return 0;
+                    }
+                    else if(critere_espece == 0){
                         afficheAnimale(*enfant[i]);
                         return 0;
                     }
                 }
-            printf("ces informations ne correspondent à aucun animale\n");
-        }
-    
-        else if(age > 10){
-            printf("l'animal est un sénior \n");
-            for(i = 0; i < c; i++){
-                if(strcmp(senior[i]->nom, n) == 0 && senior[i]->espece == e){      // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
-                        printf("l'animal existe, Voilà ses différents informations :\n");
-                        afficheAnimale(*senior[i]);
+                else if(critere_nom == 0 && critere_espece == 1 ){
+                    if(enfant[i]->espece == e){
+                        afficheAnimale(*enfant[i]);
                         return 0;
                     }
                 }
+            }
             printf("ces informations ne correspondent à aucun animal\n");
         }
-        
-        else if(age >= 2 && age <= 10){
+    
+    else if(age_type == 2){
+        printf("l'animal est un sénior \n");
+        for(i = 0; i < c; i++){
+            if(critere_nom == 1 && strcmp(senior[i]->nom, n) == 0){
+                if(critere_espece == 1 && senior[i]->espece == e ){
+                    afficheAnimale(*senior[i]);
+                    return 0;
+                }
+                else if(critere_espece == 0){
+                    afficheAnimale(*senior[i]);
+                    return 0;
+                }
+            }
+            else if(critere_nom == 0 && critere_espece == 1 ){
+                if(senior[i]->espece == e){
+                    afficheAnimale(*senior[i]);
+                    return 0;
+                }
+            }
+        }
+        printf("ces informations ne correspondent à aucun animal\n");
+    }
+    
+        else if(age_type == 3){
             printf("l'animal est un jeune \n");
             for(i = 0; i < b; i++){
-                if(strcmp(jeune[i]->nom, n) == 0 && jeune[i]->espece == e){       // on peut comparer les chaines de cartctére mais on peut utiliser strcmp(). Donc, c'est bon.
-                        printf("l'animal existe, Voilà ses différents informations :\n");
+                if(critere_nom == 1 && strcmp(jeune[i]->nom, n) == 0){
+                    if(critere_espece == 1 && jeune[i]->espece == e ){
+                        afficheAnimale(*jeune[i]);
+                        return 0;
+                    }
+                    else if(critere_espece == 0){
                         afficheAnimale(*jeune[i]);
                         return 0;
                     }
                 }
+                else if(critere_nom == 0 && critere_espece == 1 ){
+                    if(jeune[i]->espece == e){
+                        afficheAnimale(*jeune[i]);
+                        return 0;
+                    }
+                }
+            }
             printf("ces informations ne correspondent à aucun animal\n");
         }   
          return 1;
     }	
+}
