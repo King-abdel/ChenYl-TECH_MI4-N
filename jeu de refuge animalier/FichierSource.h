@@ -10,7 +10,7 @@ void ajouter_animal();
 int RechercheAnimal();
 void adopter_animal();
 void afficheAnimale (Animal a);
-int calculer_charge_nettoyage_hebdomadaire();
+int Dayclean();
 void day_food();
 void afficherInventaireNbDesc();
 void modifierAnimal();
