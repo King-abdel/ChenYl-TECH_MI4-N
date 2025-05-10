@@ -52,7 +52,7 @@ int afficherMenu() {
             printf("→ [Afficher charge de travail] 🧳\n");
             {
                 // Calcul de la charge de nettoyage hebdomadaire
-                int total_minutes = calculer_charge_nettoyage_hebdomadaire();
+                int total_minutes = day_clean();
                 int heures = total_minutes / 60;
                 int minutes = total_minutes % 60;
 
