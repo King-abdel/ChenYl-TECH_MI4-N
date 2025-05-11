@@ -50,7 +50,7 @@ void ajouter_animal() {
         printf("Nom : ");
         fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
         a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
-        } while (strlen(refuge[0].nom) == 0);
+        } while (strlen(a.nom) == 0);
 
 
         // Saisie du type d'espèce 
@@ -88,7 +88,7 @@ void ajouter_animal() {
             printf("Description : \n");
             fgets(a.descrip, MAX, stdin);                    
             a.descrip[strcspn(a.descrip, "\n")] = '\0';
-            } while (strlen(refuge[0].nom) == 0);     
+            } while (strlen(a.descrip) == 0);     
         }
 
         // Ajout de l'animal au tableau refuge 

@@ -12,12 +12,12 @@ void adopter_animal() {
         while (getchar() != '\n');  // supprimer le '\n' du tampon
     } while (id <= 0);  // L’ID doit être strictement positif
 
-    int trouvé = 0;  // Marqueur pour savoir si l’animal correspondant à l’id a été trouvé
+    int trouve = 0;  // Marqueur pour savoir si l’animal correspondant à l’id a été trouvé
 
     // Parcours du tableau des animaux
     for (int i = 0; i < nb_animal; i++) {
         if (refuge[i].id == id) {  // Si l'id de l'animal correspond à celui recherché
-            trouvé = 1;            //  on a trouvé l’animal
+            trouve = 1;            //  on a trouvé l’animal
 
             printf("Animal trouvé :\n");
             afficheAnimal(refuge[i], 1);  // Affiche les détails de l’animal trouvé
@@ -34,7 +34,7 @@ void adopter_animal() {
     }
 
     // le cas où aucun animal n’a été trouvé avec l’ID saisi
-    if (trouvé == 0) {
+    if (trouve == 0) {
         printf("Aucun animal trouvé avec l'ID %d.\n", id);
     }
 

@@ -25,7 +25,7 @@ void rechercher_animaux() {
             printf("Nom : \n");
             fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
             a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
-        }while(strlen(refuge[0].nom) == 0);
+        }while(strlen(a.nom) == 0);
 
     }
 
