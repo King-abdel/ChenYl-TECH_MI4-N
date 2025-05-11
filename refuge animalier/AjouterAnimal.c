@@ -76,7 +76,7 @@ void ajouter_animal() { 		// Fonction pour ajouter un animal au refuge
             printf("Voulez-vous ajouter une description ? (1:Oui / 0:Non) :  ");
             scanf("%d", &choix);
             while (getchar() != '\n');  // enlève le '\n'
-        } while(choix != 1 && choix != 2);
+        } while(choix != 1 && choix != 0);
 
         // Saisie de la description si l'utilisateur a choisi oui
         if (choix == 1) {
