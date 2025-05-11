@@ -10,8 +10,8 @@
 
 typedef enum{
     chien = 1, 
-    chat, 
-    hamster,
+    chats, 
+    hamsters,
     autruche
 }Espece;
 
@@ -29,7 +29,7 @@ int nb_animal= 0;               // initialise le nombre d'animaux à 0
 int prochain_id=1;
 
 // Fonction pour afficher les informations d’un animal
-void afficheAnimal(Animal a, int choix){
+void afficheAnimale(Animal a, int choix){
     printf("-----\n");  
     printf("Nom : %s\n", a.nom);         // Affichage du nom de l’animal
     printf("id : %d\n", a.id);           // Affichage de l’id
@@ -69,7 +69,7 @@ void sauvegarder_animaux() {
     mkdir("sauvegardes", 0777);
 
     // Nom de fichier fixe (toujours le même)
-    const char* fichier = "sauvegardes/animaux.txt";
+    const char* fichier = "animaux.txt";
 
     // Ouverture du fichier en écriture (écrase l'ancien)
     FILE* F = fopen(fichier, "w");
@@ -95,13 +95,13 @@ void sauvegarder_animaux() {
 
 // Fonction pour charger les animaux depuis un fichier
 void charger_animaux() {
-    const char* fichier = "sauvegardes/animaux.txt";
+    const char* fichier = "animaux.txt";
     FILE* F = fopen(fichier, "r");
     if (F==NULL) {
         perror("Fichier introuvable ou erreur d'ouverture");
         return;
     }
-    
+
     nb_animal = 0;  // Réinitialise le compteur avant chargement
 
     while (nb_animal < NbAnimal &&
@@ -128,11 +128,9 @@ void ajouter_animal() {
         a.id = prochain_id++;           // génère un identifiant unique automatiquement
 
         // Saisie du nom de l'animal
-        do{
         printf("Nom : \n");
         fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
         a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
-    }while(a.nom[0]== '\0');
 
         // Saisie du type d'espèce 
         do {
@@ -165,11 +163,9 @@ void ajouter_animal() {
 
         // Saisie de la description si l'utilisateur a choisi oui
         if (choix == 1) {
-            do{
             printf("Description : \n");
             fgets(a.descrip, MAX, stdin);                    
-            a.descrip[strcspn(a.descrip, "\n")] = '\0';
-            }while(a.descrip[0]== '\0');      
+            a.descrip[strcspn(a.descrip, "\n")] = '\0';      
         }
 
         // Ajout de l'animal au tableau refuge 
@@ -239,11 +235,9 @@ void rechercher_animaux() {
     scanf("%d", &critere_nom);
     while (getchar() != '\n');  // supprime '\n' du tampon
     if (critere_nom == 1) {
-        do{
         printf("Entrez le nom : ");
         fgets(nom, MAX, stdin);                     // lire une chaîne avec des espaces
-        nom[strcspn(nom, "\n")] = '\0';
-        }while(nom[0]=='\0');             // enlève du \n dans la chaîne
+        nom[strcspn(nom, "\n")] = '\0';             // enlève du \n dans la chaîne
     }
 
     // Demande si l'utilisateur veut filtrer par espèce
@@ -267,7 +261,7 @@ void rechercher_animaux() {
     }
 
     int trouve = 0;                // Marqueur pour savoir si un animal a été trouvé
-    int annee_courante = AnneeCourante();     // Année actuelle pour le calcul de l’âge
+    int annee_courante = 2025;     // Année actuelle pour le calcul de l’âge
 
     // Parcours de tous les animaux du refuge
     for (int i = 0; i < nb_animal; i++) {
@@ -410,13 +404,13 @@ void day_food() {
 
         // Selon l'espèce de l'animal, on ajoute une quantité différente de croquettes
         switch (a.espece) {
-            case hamster:
+            case hamsters:
                 total_croquettes_kg += 0.02; // Un hamster mange environ 20g par jour
                 break;
             case autruche:
                 total_croquettes_kg += 2.5; // Une autruche mange environ 2.5kg par jour
                 break;
-            case chat:
+            case chats:
             case chien:
                 if (age < 2) {
                     // Jeunes chiens ou chats (moins de 2 ans) mangent 500g par jour
@@ -481,12 +475,12 @@ int day_clean() {
         switch (refuge[i].espece) {
             // Pour chaque espèce, on ajoute le temps de nettoyage correspondant
 
-            case hamster:
+            case hamsters:
                 // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
                 total_minutes += (10 * 7) + 20;
                 break;
 
-            case chat:
+            case chats:
                 // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
                 total_minutes += (10 * 7) + 20;
                 break;
@@ -618,12 +612,6 @@ int main(){
     int a=0;
     afficherBanniere();
     charger_animaux();
-    prochain_id = 1;
-    for (int i = 0; i < nb_animal; i++) {
-        if (refuge[i].id >= prochain_id){
-            prochain_id = refuge[i].id + 1;
-        }
-}
     while(a != 8){
 	   a= afficherMenu();
     }
