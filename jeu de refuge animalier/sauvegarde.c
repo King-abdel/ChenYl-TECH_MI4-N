@@ -18,7 +18,7 @@ int sauvegarder_animaux() {
     // Sauvegarde 1 : fichier horodaté 
     FILE *f = fopen(filename, "w");
     if (f == NULL) {
-        printf("❌ Erreur : impossible d’ouvrir %s\n", filename);
+        printf(" Erreur : impossible d’ouvrir %s\n", filename);
         return 1;
     }
 
@@ -27,7 +27,7 @@ int sauvegarder_animaux() {
         fprintf(f, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
     }
     fclose(f);
-    printf("💾 Sauvegarde horodatée réussie dans %s\n", filename);
+    printf(" Sauvegarde horodatée réussie dans %s\n", filename);
 
     // Sauvegarde 2 : fichier fixe pour rechargement
     FILE *f2 = fopen("animaux.txt", "w");
@@ -37,9 +37,9 @@ int sauvegarder_animaux() {
             fprintf(f2, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
         }
         fclose(f2);
-        printf("💾 Sauvegarde pour chargement automatique réussie dans animaux.txt\n");
+        printf(" Sauvegarde pour chargement automatique réussie dans animaux.txt\n");
     } else {
-        printf("⚠️ Erreur : impossible d’écrire dans animaux.txt\n");
+        printf(" Erreur : impossible d’écrire dans animaux.txt\n");
     }
 
     return 0;
