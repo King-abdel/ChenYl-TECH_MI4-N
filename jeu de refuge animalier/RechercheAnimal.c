@@ -68,8 +68,9 @@ void rechercher_animaux() {
         }
         // Filtre par type d’âge 
         if (critere_age == 1) {
-            if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10))
+            if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10)){
                 repere = 0;
+            }
         }
 
         // Si l’animal vérifie les filtres, on l’affiche
