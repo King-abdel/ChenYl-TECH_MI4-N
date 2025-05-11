@@ -27,7 +27,7 @@ void modifierAnimal() {
 
             // Affiche les différentes modifications possibles
             do {
-                printf("Modifier: 1.nom || 2.année de naissance || 3.espèce || 4.poids || 5.description : ");
+                printf("Modifier: 1.nom | 2.année de naissance | 3.espèce | 4.poids | 5.description : ");
                 scanf("%d", &modif);
                 while (getchar() != '\n'); 
             } while (modif < 1 || modif > 5);
