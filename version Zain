@@ -612,6 +612,12 @@ int main(){
     int a=0;
     afficherBanniere();
     charger_animaux();
+    prochain_id = 1;
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].id >= prochain_id){
+            prochain_id = refuge[i].id + 1;
+        }
+   }
     while(a != 8){
 	   a= afficherMenu();
     }
