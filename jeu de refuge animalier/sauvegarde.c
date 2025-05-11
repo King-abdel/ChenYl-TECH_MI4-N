@@ -14,8 +14,7 @@ int sauvegarder_animaux() {
 
     // Génère un nom de fichier avec la date : animaux_YYYY-MM-DD.txt
     char filename[200];
-    sprintf(filename, "refuge/sauvegarde/animaux_%04d-%02d-%02d.txt",
-            t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
+    sprintf(filename, "animaux.txt");
 
     // Ouvre le fichier en écriture
     FILE *f = fopen(filename, "w");
