@@ -73,7 +73,7 @@ void sauvegarder_animaux() {
 
     // Ouverture du fichier en écriture (écrase l'ancien)
     FILE* F = fopen(fichier, "w");
-    if (F=NULL) {
+    if (F==NULL) {
         perror("Erreur d'ouverture du fichier de sauvegarde");
         return;
     }
@@ -115,7 +115,7 @@ void charger_animaux() {
         nb_animal++;
     }
 
-    fclose(file);
+    fclose(F);
 }
 
 // Fonction pour ajouter un animal au refuge
