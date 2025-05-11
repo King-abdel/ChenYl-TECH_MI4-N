@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #define NbAnimal 50
 #define MAX 1000
 
@@ -62,13 +60,13 @@ void afficheAnimale(Animal a, int choix){
 
     printf("-----\n");  
 }
-
+	
 // Fonction pour sauvegarder les animaux depuis un fichier
 void sauvegarder_animaux() {
     // Création du dossier "sauvegardes" 
     mkdir("sauvegardes", 0777);
-
-    // Nom de fichier fixe (toujours le même)
+    
+    // Nom de fichier fixe 
     const char* fichier = "animaux.txt";
 
     // Ouverture du fichier en écriture (écrase l'ancien)
@@ -108,7 +106,7 @@ void charger_animaux() {
            fscanf(F, "%d;%999[^;];%d;%d;%f;%999[^\n]\n",
                   &refuge[nb_animal].id,
                   refuge[nb_animal].nom,
-                  &refuge[nb_animal].espece,
+                  (int*)&refuge[nb_animal].espece,
                   &refuge[nb_animal].annee,
                   &refuge[nb_animal].poids,
                   refuge[nb_animal].descrip) == 6) {
@@ -117,6 +115,7 @@ void charger_animaux() {
 
     fclose(F);
 }
+
 
 // Fonction pour ajouter un animal au refuge
 void ajouter_animal() { 		

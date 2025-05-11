@@ -7,7 +7,7 @@ void adopter_animal() {
 
     // Saisir l'id de l'animal à adopter
     do {
-        printf("ID de l'animal à adopter : ");
+        printf("ID de l'animal à adopter (entier positif) : ");
         scanf("%d", &id);
         while (getchar() != '\n');  // supprimer le '\n' du tampon
     } while (id <= 0);  // L’ID doit être strictement positif

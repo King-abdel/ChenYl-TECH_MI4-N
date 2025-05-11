@@ -45,7 +45,7 @@ void ajouter_animal() { 		// Fonction pour ajouter un animal au refuge
         a.id = prochain_id++;           // génère un identifiant unique automatiquement
 
         // Saisie du nom de l'animal
-        printf("Nom : \n");
+        printf("Nom : ");
         fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
         a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
 

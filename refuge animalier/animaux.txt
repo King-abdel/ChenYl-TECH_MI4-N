@@ -1,0 +1,6 @@
+1;abdel;2;2000;22.00;ı
+2;You;4;1900;45.00;je suis hamer
+3;Zain;1;2024;14.00;je suis un intello
+4;Mouad;2;2010;45.00;je suis un intello
+5;abdel;4;2005;11.00;
+6;sain;4;2023;11.00;je suis un mauvais boxeur

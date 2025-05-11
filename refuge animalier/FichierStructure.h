@@ -10,8 +10,8 @@
 
 typedef enum {
     chien = 1,
-    chats,
-    hamsters,
+    chat,
+    hamster,
     autruche
 } Espece;
 
