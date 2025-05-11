@@ -76,7 +76,7 @@ int Validation(int critere){
     return critere;
 }
 
-int RechercheAnimal(){
+int rechercher_animaux(){
     char n[MAX];
     Espece e;
     int critere_nom , critere_espece, critere_age, age_type;
