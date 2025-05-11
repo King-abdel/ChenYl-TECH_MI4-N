@@ -31,5 +31,5 @@ $(EXEC): $(OBJ)
 clean:
 	rm -f *.o $(EXEC)
 
-# Rebuild complet
+# Suprrimer exécutable
 rebuild: clean all
