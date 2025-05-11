@@ -1,3 +1,6 @@
+# Nom de l'exécutable
+EXEC = maker
+
 # Compilateur
 CC = gcc
 
@@ -12,9 +15,6 @@ HEADERS = FichierStructure.h FichierSource.h
 
 # Objets générés
 OBJ = $(SRC:.c=.o)
-
-# Nom de l'exécutable
-EXEC = maker
 
 # Cible par défaut
 all: $(EXEC)

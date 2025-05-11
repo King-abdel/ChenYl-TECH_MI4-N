@@ -5,7 +5,7 @@
 void charger_animaux() {
     const char* fichier = "sauvegardes/animaux.txt";
     FILE* F = fopen(fichier, "r");
-    if (F==NULL) {
+    if (F==NULL) { // verification erreur
         perror("Fichier introuvable ou erreur d'ouverture");
         return;
     }
