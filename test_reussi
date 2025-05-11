@@ -1,0 +1,641 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#define NbAnimal 50
+#define MAX 1000
+
+
+typedef enum{
+    chien = 1, 
+    chat, 
+    hamster,
+    autruche
+}Espece;
+
+typedef struct{
+    int id;
+    int annee;
+    float poids;
+    char nom[MAX];
+    char descrip[MAX];
+    Espece espece;
+}Animal;
+
+Animal refuge[NbAnimal];        // tableau d'animal qui stocke les animaux de tout le refuge
+int nb_animal= 0;               // initialise le nombre d'animaux à 0
+int prochain_id=1;
+
+// Fonction pour afficher les informations d’un animal
+void afficheAnimal(Animal a, int choix){
+    printf("-----\n");  
+    printf("Nom : %s\n", a.nom);         // Affichage du nom de l’animal
+    printf("id : %d\n", a.id);           // Affichage de l’id
+    printf("annee : %d\n", a.annee);     // Affichage de l’année de naissance
+    printf("poids : %.2f kg\n", a.poids); // Affichage du poids
+
+    // Affichage de l'espèce 
+    switch(a.espece){
+        case 1 :
+            printf("Espece : chien \n");
+            break;
+        case 2 :
+            printf("Espece : chat \n");
+            break;
+        case 3 :
+            printf("Espece : Hamster \n");
+            break;
+        case 4 :
+            printf("Espece : Autruche \n");
+            break;
+        default:
+            printf("Espece : inconnue \n"); // Sécurité si valeur inattendue
+            break;
+    }
+
+    // Affichage aussi la description
+    if(choix == 1){  
+        printf("description : %s\n", a.descrip);
+    }
+
+    printf("-----\n");  
+}
+
+// Fonction pour sauvegarder les animaux depuis un fichier
+void sauvegarder_animaux() {
+    // Création du dossier "sauvegardes" 
+    mkdir("sauvegardes", 0777);
+
+    // Nom de fichier fixe (toujours le même)
+    const char* fichier = "sauvegardes/animaux.txt";
+
+    // Ouverture du fichier en écriture (écrase l'ancien)
+    FILE* F = fopen(fichier, "w");
+    if (F==NULL) {
+        perror("Erreur d'ouverture du fichier de sauvegarde");
+        return;
+    }
+
+    // Écriture des données
+    for (int i = 0; i < nb_animal; i++) {
+        fprintf(F, "%d;%s;%d;%d;%.2f;%s\n",
+                refuge[i].id,
+                refuge[i].nom,
+                refuge[i].espece,
+                refuge[i].annee,
+                refuge[i].poids,
+                refuge[i].descrip);
+    }
+
+    fclose(F);
+}
+
+
+// Fonction pour charger les animaux depuis un fichier
+void charger_animaux() {
+    const char* fichier = "sauvegardes/animaux.txt";
+    FILE* F = fopen(fichier, "r");
+    if (F==NULL) {
+        perror("Fichier introuvable ou erreur d'ouverture");
+        return;
+    }
+
+    nb_animal = 0;  // Réinitialise le compteur avant chargement
+
+    while (nb_animal < NbAnimal &&
+           fscanf(F, "%d;%999[^;];%d;%d;%f;%999[^\n]\n",
+                  &refuge[nb_animal].id,
+                  refuge[nb_animal].nom,
+                  (int*)&refuge[nb_animal].espece,
+                  &refuge[nb_animal].annee,
+                  &refuge[nb_animal].poids,
+                  refuge[nb_animal].descrip) == 6) {
+        nb_animal++;
+    }
+
+    fclose(F);
+}
+
+// Fonction pour ajouter un animal au refuge
+void ajouter_animal() { 		
+   
+    if (nb_animal >= NbAnimal) {	 // Vérifie si la capacité maximale est atteinte
+        printf("Capacité maximale atteinte.\n");
+    } else {	
+        Animal a;                        // Déclare une variable de type Animal
+        a.id = prochain_id++;           // génère un identifiant unique automatiquement
+
+        // Saisie du nom de l'animal
+        do{
+        printf("Nom : ");
+        fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
+        a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
+    }while(a.nom[0]== '\0');
+
+        // Saisie du type d'espèce 
+        do {
+            printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
+            scanf("%d", (int*)&a.espece);
+            while (getchar() != '\n');  // supprimer le '\n' du tampon
+        } while(a.espece < 1 || a.espece > 4);
+
+        // Saisie de l’année de naissance
+        do {
+            printf("Année de naissance : ");
+            scanf("%d", &a.annee);
+            while (getchar() != '\n');  
+        } while(a.annee < 0);
+        
+        // Saisie du poids 
+        do {
+            printf("Poids (kg) : ");
+            scanf("%f", &a.poids);
+            while (getchar() != '\n');
+        } while(a.poids <= 0);   
+
+        int choix;
+        // Demande pour ajouter une description 
+        do {
+            printf("Voulez-vous ajouter une description ? (1:Oui / 0:Non) : ");
+            scanf("%d", &choix);
+            while (getchar() != '\n');  // enlève le '\n'
+        } while(choix != 1 && choix != 0);
+
+        // Saisie de la description si l'utilisateur a choisi oui
+        if (choix == 1) {
+            do{
+            printf("Description : \n");
+            fgets(a.descrip, MAX, stdin);                    
+            a.descrip[strcspn(a.descrip, "\n")] = '\0';
+            }while(a.descrip[0]== '\0');      
+        }
+
+        // Ajout de l'animal au tableau refuge 
+        refuge[nb_animal++] = a;
+
+        // Affichage des caractéristique de l’animal ajouté
+        afficheAnimal(a, choix);
+
+        printf("✅ Animal ajouté avec succès.\n");
+
+        // Sauvegarde dans le fichier 
+        sauvegarder_animaux();  
+    }
+}
+
+
+// Fonction qui permet d’adopter (supprimer) un animal du refuge selon son identifiant
+void adopter_animal() {
+    int id;  // Variable de l'id de l’animal à adopter 
+
+    // Saisir l'id de l'animal à adopter
+    do {
+        printf("ID de l'animal à adopter (entier positif) : ");
+        scanf("%d", &id);
+        while (getchar() != '\n');  // supprimer le '\n' du tampon
+    } while (id <= 0);  // L’ID doit être strictement positif
+
+    int trouvé = 0;  // Marqueur pour savoir si l’animal correspondant à l’id a été trouvé
+
+    // Parcours du tableau des animaux
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].id == id) {  // Si l'id de l'animal correspond à celui recherché
+            trouvé = 1;            //  on a trouvé l’animal
+
+            printf("Animal trouvé :\n");
+            afficheAnimal(refuge[i], 1);  // Affiche les détails de l’animal trouvé
+
+            // Réajustement des indices : on décale les animaux suivants d’une position vers la gauche
+            for (int j = i; j < nb_animal - 1; j++) {
+                refuge[j] = refuge[j + 1];  // Écrase les données de refuge[i] avec refuge[i+1]
+            }
+
+            nb_animal--;  // On retire le nombre animal car un animal a été supprimé
+            printf("Animal avec ID %d adopté avec succès.\n", id);
+            break;        // Sort de la boucle après adoption
+        }
+    }
+
+    // le cas où aucun animal n’a été trouvé avec l’ID saisi
+    if (trouvé == 0) {
+        printf("Aucun animal trouvé avec l'ID %d.\n", id);
+    }
+
+    // Sauvegarde la nouvelle liste d'animaux après adoption
+    sauvegarder_animaux();
+}
+
+// Fonction permettant de déterminer l'année actuel automatiquement
+int AnneeCourante(){
+    int annee_actuel;
+    time_t ts = time(NULL);    //time_t permet de déclarer une variable en seconde depuis 1970. time(NULL) c'est une fonction qui sert à obtenir le temps actuel en seconde. 
+    annee_actuel = 1970 + (ts/(60*60*24*365));   // on fait la conversion de ts en année puis on ajoute 1970.
+    return annee_actuel;
+ } 
+
+// Fonction permettant de rechercher des animaux selon plusieurs critères (nom, espèce, âge)
+void rechercher_animaux() {
+    Animal a;                      // Variable  pour parcourir le tableau
+    char nom[MAX];                // Nom à saisir
+    int filtre_espece, age_type;  // Variables pour filtrer espèce et type d’âge
+    int critere_nom = 0, critere_espece = 0, critere_age = 0; // Variable pour savoir les filtres saisir
+
+    // Demande si l'utilisateur veut filtrer par nom
+    printf("Rechercher par nom ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_nom);
+    while (getchar() != '\n');  // supprime '\n' du tampon
+    if (critere_nom == 1) {
+        do{
+            printf("Nom : \n");
+            fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
+            a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
+        }while(a.nom[0]== '\0');
+    }
+
+    // Demande si l'utilisateur veut filtrer par espèce
+    printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_espece);
+    while (getchar() != '\n');
+    if (critere_espece == 1) {
+        printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
+        scanf("%d", &filtre_espece);
+        while (getchar() != '\n');
+    }
+
+    // Demande si l'utilisateur veut filtrer par âge
+    printf("Rechercher par type d'âge ? (1:Oui / 0:Non) : ");
+    scanf("%d", &critere_age);
+    while (getchar() != '\n');
+    if (critere_age == 1) {
+        printf("1: Jeune (<2 ans), 2: Senior (>10 ans) : ");
+        scanf("%d", &age_type);
+        while (getchar() != '\n');
+    }
+
+    int trouve = 0;                // Marqueur pour savoir si un animal a été trouvé
+    int annee_courante = AnneeCourante();     // Année actuelle pour le calcul de l’âge
+
+    // Parcours de tous les animaux du refuge
+    for (int i = 0; i < nb_animal; i++) {
+        a = refuge[i];
+        int age = annee_courante - a.annee;  // Calcul de l’âge de l’animal
+
+        int repere = 1;  //vérifie si l’animal correspond à tous les filtres
+
+        // Filtre par nom 
+        if (critere_nom == 1 && strcmp(a.nom, nom) != 0){
+            repere = 0;
+        }
+        // Filtre par espèce
+        if (critere_espece == 1 && a.espece != (Espece)filtre_espece){
+            repere = 0;
+        }                
+        // Filtre par type d’âge 
+        if (critere_age == 1) {
+            if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10)){
+                repere = 0;
+            }       
+        }
+
+        // Si l’animal vérifie les filtres, on l’affiche
+        if (repere == 1) {
+            afficheAnimal(a, 1);  // Affichage des caractéristiques de l'animal
+            trouve = 1;
+        }
+    }
+
+    // le cas où aucun animal n’a été trouvé
+    if (trouve == 0){
+        printf("Aucun animal ne correspond aux critères.\n");
+    }
+}
+
+// Fonction permettant de modifier les informations d’un animal identifié par son ID
+void modifierAnimal() {
+    int id;         // Variable  de l’id saisi par l’utilisateur
+    int trouve = 0; // Marqueur pour vérifier si l’animal a été trouvé
+
+    //  saisir un id valide
+    do {
+        printf("ID de l'animal à modifier : ");
+        scanf("%d", &id);
+        while (getchar() != '\n'); // supprime le '\n' du tampon
+    } while (id <= 0);
+
+    // Parcours de tous les animaux du refuge pour chercher celui avec l’id correspondant
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].id == id) { // Si l’ID correspond à celui d’un animal du tableau
+            trouve = 1; // L’animal est trouvé
+
+            // Affiche les caractéristiques de l’animal avant modification
+            afficheAnimal(refuge[i], 1);
+
+            int modif; // Variable pour le choix de l’utilisateur
+
+            // Affiche les différentes modifications possibles
+            do {
+                printf("Modifier: 1.nom || 2.année de naissance || 3.espèce || 4.poids || 5.description : ");
+                scanf("%d", &modif);
+                while (getchar() != '\n'); 
+            } while (modif < 1 || modif > 5);
+
+            // on modifie le critère correspondant
+            switch (modif) {
+                case 1: // Modification du nom
+                    do{
+                        printf("Nouveau nom : ");
+                        fgets(refuge[i].nom, MAX, stdin); // Lire une chaîne avec des espaces
+                        refuge[i].nom[strcspn(refuge[i].nom, "\n")] = '\0'; // enlève le '\n' de la chaîne
+                    }while(refuge[0].nom == '\0');
+
+                    break;
+
+                case 2: // Modification de l’année de naissance
+                    do {
+                        printf("Nouvelle année de naissance : ");
+                        scanf("%d", &refuge[i].annee);
+                        while (getchar() != '\n');
+                    } while (refuge[i].annee < 0); // L’année doit être positive
+                    break;
+
+                case 3: // Modification de l’espèce
+                    do {
+                        printf("Nouvelle espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
+                        scanf("%d", (int*)&refuge[i].espece); 
+                        while (getchar() != '\n');
+                    } while (refuge[i].espece < 1 || refuge[i].espece > 4);
+                    break;
+
+                case 4: // Modification du poids
+                    do {
+                        printf("Nouveau poids : ");
+                        scanf("%f", &refuge[i].poids);
+                        while (getchar() != '\n');
+                    } while (refuge[i].poids < 0); // Le poids doit être positif
+                    break;
+
+                case 5: // Modification de la description
+                    printf("Nouvelle description : ");
+                    fgets(refuge[i].descrip, MAX, stdin);
+                    refuge[i].descrip[strcspn(refuge[i].descrip, "\n")] = '\0'; 
+                    break;
+            }
+
+            printf("✅ Animal modifié avec succès !\n");
+            afficheAnimal(refuge[i], 1); // Affiche les nouvelles informations après les modifications
+            break; // Sortir de la boucle 
+        }
+    }
+
+    // Si aucun animal avec l’ID saisi n’est trouvé
+    if (trouve == 0) {
+        printf("❌ Aucun animal trouvé avec l'ID %d.\n", id);
+    }
+
+    // Sauvegarde les changements dans le fichier
+    sauvegarder_animaux(); 
+}
+
+
+// Fonction qui calcule la quantité totale de croquettes nécessaire pour nourrir tous les animaux du refuge en un jour
+void day_food() {
+    int annee_courante = AnneeCourante();
+
+    float total_croquettes_kg = 0.0; // Initialisation du total de croquettes en kg
+
+    // Parcours de tous les animaux présents dans le refuge
+    for (int i = 0; i < nb_animal; i++) {
+        Animal a = refuge[i]; // Récupère l'animal courant
+        int age = annee_courante - a.annee; // Calcule son âge en années
+
+        // Selon l'espèce de l'animal, on ajoute une quantité différente de croquettes
+        switch (a.espece) {
+            case hamster:
+                total_croquettes_kg += 0.02; // Un hamster mange environ 20g par jour
+                break;
+            case autruche:
+                total_croquettes_kg += 2.5; // Une autruche mange environ 2.5kg par jour
+                break;
+            case chat:
+            case chien:
+                if (age < 2) {
+                    // Jeunes chiens ou chats (moins de 2 ans) mangent 500g par jour
+                    total_croquettes_kg += 0.5;
+                } else {
+                    // Sinon, ils mangent l'équivalent de 10% de leur poids
+                    total_croquettes_kg += a.poids * 0.10;
+                }
+                break;
+        }
+    }
+
+    // Affichage du résultat final
+    printf("\n🍽️  Quantité totale de croquettes nécessaire aujourd'hui : %.2f kg\n", total_croquettes_kg);
+}
+
+// Les espèces sont affichées par ordre décroissant de leur nombre
+void afficherInventaireNbDesc() {
+    int compteur[4] = {0};    // Tableau pour compter le nombre d'animaux par espèce
+                              // Indices : 0 = chien, 1 = chat, 2 = hamster, 3 = autruche
+
+    int indices[4] = {0, 1, 2, 3}; // Tableau des indices servant à trier les espèces sans perdre le lien avec leur nom
+
+    // Étape 1 : Comptage des animaux par espèce
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].espece >= chien && refuge[i].espece <= autruche) {
+            compteur[refuge[i].espece - 1]++; // On utilise l’énumération (débutant à 1)
+        }
+    }
+
+    // Étape 2 : Tri des espèces en fonction du nombre d'animaux (ordre décroissant)
+    for (int i = 0; i < 3; i++) {
+        for (int j = i + 1; j < 4; j++) {
+            if (compteur[i] < compteur[j]) {
+                // Échange des valeurs de compteur
+                int tmp = compteur[i];
+                compteur[i] = compteur[j];
+                compteur[j] = tmp;
+
+                // Échange également des indices associés (pour garder les noms cohérents)
+                int tmpIdx = indices[i];
+                indices[i] = indices[j];
+                indices[j] = tmpIdx;
+            }
+        }
+    }
+
+    // Tableau des noms des espèces (dans l’ordre d'origine)
+    const char *nomsEspeces[4] = { "Chien 🐶", "Chat 🐱", "Hamster 🐹", "Autruche 🐦" };
+
+    // Affichage global
+    printf("\n📦 Nombre total d'animaux : %d\n", nb_animal);
+    printf("📊 Détail par espèce (ordre décroissant) :\n");
+
+    // Affichage des espèces présentes avec leur nombre, triées par ordre décroissant
+    for (int i = 0; i < 4; i++) {
+        if (compteur[i] > 0) { // On affiche seulement les espèces présentes
+            printf("   - %s : %d\n", nomsEspeces[indices[i]], compteur[i]);
+        }
+    }
+}
+
+// Le calcul dépend du type d’animal et inclut aussi les cages vides
+int day_clean() {
+    int total_minutes = 0; // Initialisation du temps total en minutes
+
+    // Parcours de tous les animaux actuellement dans le refuge
+    for (int i = 0; i < nb_animal; i++) {
+        switch (refuge[i].espece) {
+            // Pour chaque espèce, on ajoute le temps de nettoyage correspondant
+
+            case hamster:
+                // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
+                total_minutes += (10 * 7) + 20;
+                break;
+
+            case chat:
+                // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
+                total_minutes += (10 * 7) + 20;
+                break;
+
+            case autruche:
+                // 20 minutes par jour * 7 jours + 45 minutes de nettoyage hebdomadaire
+                total_minutes += (20 * 7) + 45;
+                break;
+
+            case chien:
+                // 5 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
+                total_minutes += (5 * 7) + 20;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    // Calcul du nombre de cages vides (sur les 50 places disponibles)
+    int nb_vides = NbAnimal - nb_animal;
+
+    // On ajoute 2 minutes par jour de nettoyage pour chaque cage vide, pendant 7 jours
+    // Donc 2 min/jour * 7 jours = 14 minutes par cage vide sur la semaine
+    total_minutes += nb_vides * 14;
+
+    // Retourne le temps total estimé de nettoyage 
+    return total_minutes;
+}
+
+
+void afficherBanniere() {
+    printf("\033[1;34m"); 
+     printf("\n");
+     printf("                 ****   **    **  ********  **       **  **     **        *********  ********    ****   **    **\n");
+     printf("                **  **  **    **  **        ** **    **   **   **             **     **         **  **  **    **\n");
+     printf("               **       **    **  **        **  **   **    ** **              **     **        **       **    **\n");
+     printf("               **       ********  ******    **   **  **     ***               **     ********  **       ********\n");
+     printf("               **       **    **  **        **    ** **     ***    ******     **     **        **       **    **\n");
+     printf("                **  **  **    **  **        **     ****     ***               **     **         **   ** **    **\n");
+     printf("                 ****   **    **  ********  **      ***     ***               **     ********    ****   **    **\n");
+     printf("\033[0m"); 
+ }
+ 
+
+// Fonction qui affiche le menu principal et gère les choix de l'utilisateur
+int afficherMenu() {
+    // Affichage du menu  
+    printf("\n\033[1;3m"); // Activation du style italique et gras dans le terminal 
+    printf("                              ======================== MENU PRINCIPAL ========================\n");
+    printf("                              |                                                              |\n");
+    printf("                              |   1. ➕ Ajouter un animal                                    |\n");
+    printf("                              |   2. 🔍 Rechercher un animal                                 |\n");
+    printf("                              |   3. 🏠 Adopter un animal                                    |\n");
+    printf("                              |   4. 📦 Afficher l'inventaire                                |\n");
+    printf("                              |   5. 🧽 Afficher la charge de nettoyage hebdomadaire         |\n");
+    printf("                              |   6. 🍽️ Afficher la quantité de nourriture quotidienne       |\n");
+    printf("                              |   7. 📝 Modifier les informations d’un animal                |\n");                  
+    printf("                              |   8. ❌ Quitter le programme                                 |\n");
+    printf("                              |______________________________________________________________|\n");
+    printf("\033[0m\n"); 
+   
+    printf("\n✅ Veuillez Sélectionner Une Action (Tapez 8 Pour Quitter ❌) : ");
+	
+    int choix;
+
+    scanf("%d", &choix); // Lecture du choix utilisateur
+    while (getchar() != '\n'); // Enlève les caractères restants (comme "Entrée") après scanf
+
+
+    // Traitement du choix via un switch
+    switch (choix) {
+        case 1:
+            printf("→ [Ajouter un animal] 🐶\n");
+            ajouter_animal(); // Appel à la fonction pour ajouter un animal
+            break;
+
+        case 2:
+            printf("→ [Rechercher un animal] 🔍\n");
+            rechercher_animaux(); // Appel à la fonction de recherche
+            break;
+
+        case 3:
+            printf("→ [Retirer un animal] 🚪\n");
+            adopter_animal(); // Appel à la fonction pour adopter (retirer) un animal
+            break;
+
+        case 4:
+            printf("→ [Afficher l'inventaire] 📋\n");
+            afficherInventaireNbDesc(); // Appel à la fonction d'affichage de l'inventaire
+            break;
+
+        case 5:
+            printf("→ [Afficher charge de travail] 🧳\n");
+            {
+                // Calcul de la charge de nettoyage hebdomadaire
+                int total_minutes = day_clean();
+                int heures = total_minutes / 60;
+                int minutes = total_minutes % 60;
+
+                // Affichage du résultat sous forme "hh:mm"
+                printf("⏱️ Charge totale de nettoyage hebdomadaire : %02dh %02dmin\n", heures, minutes);
+            }
+            break;
+
+        case 6:
+            printf("→ [Afficher la quantité de croquettes] 🍽️\n");
+            day_food(); // Appel à la fonction pour afficher la nourriture quotidienne
+            break;
+
+        case 7:
+            printf("→ [Modifier un animal] 📝\n");
+            modifierAnimal(); // Appel à la fonction de modification d’un animal
+            break;
+
+        case 8:
+            printf("Au revoir ! 👋\n"); // Fin du programme
+            break;
+
+        default:
+            printf("Choix invalide, réessaie ! ❌\n"); // Gestion des entrées incorrectes
+            break;
+    }
+
+    return choix; 
+}
+
+int main(){
+    int a=0;
+    afficherBanniere();
+    charger_animaux();
+    prochain_id = 1;
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].id >= prochain_id){
+            prochain_id = refuge[i].id + 1;
+        }
+}
+    while(a != 8){
+	   a= afficherMenu();
+    }
+	
+return 0;
+}
