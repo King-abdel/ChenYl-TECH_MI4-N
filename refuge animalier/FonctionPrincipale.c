@@ -30,7 +30,7 @@ int afficherMenu() {
     printf("                              |   3. 🏠 Adopter un animal                                    |\n");
     printf("                              |   4. 📦 Afficher l'inventaire                                |\n");
     printf("                              |   5. 🧽 Afficher la charge de nettoyage hebdomadaire         |\n");
-    printf("                              |   6. 🍽️ Afficher la quantité de nourriture quotidienne        |\n");
+    printf("                              |   6. 🍽️ Afficher la quantité de nourriture quotidienne       |\n");
     printf("                              |   7. 📝 Modifier les informations d’un animal                |\n");                  
     printf("                              |   8. ❌ Quitter le programme                                 |\n");
     printf("                              |______________________________________________________________|\n");
@@ -105,8 +105,14 @@ int main(){
     int a=0;
     afficherBanniere();
     charger_animaux();
+    prochain_id = 1;
+    for (int i = 0; i < nb_animal; i++) {
+        if (refuge[i].id >= prochain_id){
+            prochain_id = refuge[i].id + 1;
+        }
+}
     while(a != 8){
-	   a= afficherMenu();
+	a= afficherMenu();
     }
 	
 return 0;
