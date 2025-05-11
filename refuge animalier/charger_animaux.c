@@ -3,7 +3,7 @@
 
 // Fonction pour charger les animaux depuis un fichier
 void charger_animaux() {
-    const char* fichier = "animaux.txt";
+    const char* fichier = "sauvegardes/animaux.txt";
     FILE* F = fopen(fichier, "r");
     if (F==NULL) {
         perror("Fichier introuvable ou erreur d'ouverture");

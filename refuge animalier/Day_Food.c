@@ -14,13 +14,13 @@ void day_food() {
 
         // Selon l'espèce de l'animal, on ajoute une quantité différente de croquettes
         switch (a.espece) {
-            case hamsters:
+            case hamster:
                 total_croquettes_kg += 0.02; // Un hamster mange environ 20g par jour
                 break;
             case autruche:
                 total_croquettes_kg += 2.5; // Une autruche mange environ 2.5kg par jour
                 break;
-            case chats:
+            case chat:
             case chien:
                 if (age < 2) {
                     // Jeunes chiens ou chats (moins de 2 ans) mangent 500g par jour

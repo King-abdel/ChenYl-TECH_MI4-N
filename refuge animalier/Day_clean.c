@@ -10,12 +10,12 @@ int day_clean() {
         switch (refuge[i].espece) {
             // Pour chaque espèce, on ajoute le temps de nettoyage correspondant
 
-            case hamsters:
+            case hamster:
                 // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
                 total_minutes += (10 * 7) + 20;
                 break;
 
-            case chats:
+            case chat:
                 // 10 minutes par jour * 7 jours + 20 minutes de nettoyage hebdomadaire
                 total_minutes += (10 * 7) + 20;
                 break;

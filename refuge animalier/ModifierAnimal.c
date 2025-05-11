@@ -1,5 +1,7 @@
 #include "FichierStructure.h"  
 #include "FichierSource.h" 
+#include <sys/stat.h>
+#include <sys/types.h>
 
 // Fonction permettant de modifier les informations d’un animal identifié par son ID
 void modifierAnimal() {

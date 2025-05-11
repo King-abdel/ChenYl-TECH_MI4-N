@@ -22,9 +22,11 @@ void rechercher_animaux() {
     while (getchar() != '\n');  // supprime '\n' du tampon
     }while(critere_nom!=0 && critere_nom!=1);
     if (critere_nom == 1) {
-        printf("Entrez le nom : ");
-        fgets(nom, MAX, stdin);                     // lire une chaîne avec des espaces
-        nom[strcspn(nom, "\n")] = '\0';             // enlève du \n dans la chaîne
+        do{
+            printf("Nom : \n");
+            fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
+            a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
+        }while(a.nom[0]== '\0');
     }
 
     // Demande si l'utilisateur veut filtrer par espèce

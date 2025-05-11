@@ -1,13 +1,15 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
+#include <sys/stat.h>
+#include <sys/types.h>
 
 // Fonction pour sauvegarder les animaux depuis un fichier
 void sauvegarder_animaux() {
     // Création du dossier "sauvegardes" 
     mkdir("sauvegardes", 0777);
-    
-    // Nom de fichier fixe 
-    const char* fichier = "animaux.txt";
+
+    // Nom de fichier fixe (toujours le même)
+    const char* fichier = "sauvegardes/animaux.txt";
 
     // Ouverture du fichier en écriture (écrase l'ancien)
     FILE* F = fopen(fichier, "w");
