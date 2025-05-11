@@ -9,9 +9,11 @@ void rechercher_animaux() {
     int critere_nom = 0, critere_espece = 0, critere_age = 0; // Variable pour savoir les filtres saisir
 
     // Demande si l'utilisateur veut filtrer par nom
+    do{
     printf("Rechercher par nom ? (1:Oui / 0:Non) : ");
     scanf("%d", &critere_nom);
     while (getchar() != '\n');  // supprime '\n' du tampon
+    }while(critere_nom!=0 && critere_nom!=1);
     if (critere_nom == 1) {
         printf("Entrez le nom : ");
         fgets(nom, MAX, stdin);                     // lire une chaîne avec des espaces
@@ -19,23 +21,31 @@ void rechercher_animaux() {
     }
 
     // Demande si l'utilisateur veut filtrer par espèce
-    printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
-    scanf("%d", &critere_espece);
-    while (getchar() != '\n');
-    if (critere_espece == 1) {
-        printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
-        scanf("%d", &filtre_espece);
+    do{
+        printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
+        scanf("%d", &critere_espece);
         while (getchar() != '\n');
+    }while(critere_espece!=0 && critere_espece!=1);
+    if (critere_espece == 1) {
+        do{
+            printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
+            scanf("%d", &filtre_espece);
+            while (getchar() != '\n');
+        }while(filtre_espece<1 && filtre_espece>4);
     }
 
     // Demande si l'utilisateur veut filtrer par âge
+    do{
     printf("Rechercher par type d'âge ? (1:Oui / 0:Non) : ");
     scanf("%d", &critere_age);
     while (getchar() != '\n');
+    }while(critere_age!=0 && critere_age!=1);
     if (critere_age == 1) {
+        do{
         printf("1: Jeune (<2 ans), 2: Senior (>10 ans) : ");
         scanf("%d", &age_type);
         while (getchar() != '\n');
+        }while(age_type !=1 && age_type!=2);
     }
 
     int trouve = 0;                // Marqueur pour savoir si un animal a été trouvé
