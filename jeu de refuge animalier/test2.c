@@ -65,17 +65,6 @@ void afficheAnimale(Animal a, int choix){
     printf("-----\n");  
 }
 	
-
-
-
-
-
-
-
-
-
-
-
 int sauvegarder_animaux() {
     mkdir("refuge", 0777);
     mkdir("refuge/sauvegarde", 0777);
