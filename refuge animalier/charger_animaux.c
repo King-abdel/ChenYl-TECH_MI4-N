@@ -16,7 +16,7 @@ void charger_animaux() {
            fscanf(F, "%d;%999[^;];%d;%d;%f;%999[^\n]\n",
                   &refuge[nb_animal].id,
                   refuge[nb_animal].nom,
-                  &refuge[nb_animal].espece,
+                  (int*)&refuge[nb_animal].espece,
                   &refuge[nb_animal].annee,
                   &refuge[nb_animal].poids,
                   refuge[nb_animal].descrip) == 6) {

@@ -1,6 +1,7 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
 
+// Fonction permettant de déterminer l'année actuel automatiquement
 int AnneeCourante(){
     int annee_actuel;
     time_t ts = time(NULL);    //time_t permet de déclarer une variable en seconde depuis 1970. time(NULL) c'est une fonction qui sert à obtenir le temps actuel en seconde. 
@@ -58,22 +59,23 @@ void rechercher_animaux() {
         int repere = 1;  //vérifie si l’animal correspond à tous les filtres
 
         // Filtre par nom 
-        if (critere_nom == 1 && strcmp(a.nom, nom) != 0)
+        if (critere_nom == 1 && strcmp(a.nom, nom) != 0){
             repere = 0;
-
+        }
         // Filtre par espèce
-        if (critere_espece == 1 && a.espece != filtre_espece)
+        if (critere_espece == 1 && a.espece != (Espece)filtre_espece){
             repere = 0;
-
+        }                
         // Filtre par type d’âge 
         if (critere_age == 1) {
-            if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10))
+            if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10)){
                 repere = 0;
+            }       
         }
 
         // Si l’animal vérifie les filtres, on l’affiche
         if (repere == 1) {
-            afficheAnimale(a, 1);  // Affichage des caractéristiques de l'animal
+            afficheAnimal(a, 1);  // Affichage des caractéristiques de l'animal
             trouve = 1;
         }
     }
