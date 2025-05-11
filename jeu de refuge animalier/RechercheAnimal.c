@@ -63,18 +63,19 @@ void rechercher_animaux() {
             repere = 0;
 
         // Filtre par espèce
-        if (critere_espece == 1 && a.espece != filtre_espece)
+        if (critere_espece == 1 && a.espece != (Espece)filtre_espece)
             repere = 0;
 
         // Filtre par type d’âge 
         if (critere_age == 1) {
-            if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10))
+            if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10)){
                 repere = 0;
+            }
         }
 
         // Si l’animal vérifie les filtres, on l’affiche
         if (repere == 1) {
-            afficheAnimale(a, 1);  // Affichage des caractéristiques de l'animal
+            afficheAnimal(a, 1);  // Affichage des caractéristiques de l'animal
             trouve = 1;
         }
     }

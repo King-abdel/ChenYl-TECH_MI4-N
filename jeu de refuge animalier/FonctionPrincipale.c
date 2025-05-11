@@ -44,7 +44,7 @@ scanf("%d", &choix);
             break;
         case 2:
             printf("→ [Rechercher un animal] 🔍\n");
-            RechercheAnimal();
+            rechercher_animaux();
             break;
         case 3:
             printf("→ [Retirer un animal] 🚪\n");

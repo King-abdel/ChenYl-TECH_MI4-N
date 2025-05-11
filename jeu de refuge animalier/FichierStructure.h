@@ -1,5 +1,5 @@
-#ifndef FICHIERSTRUCTURE_H
-#define FICHIERSTRUCTURE_H
+#ifndef FICHIER_STRUCTURE_H
+#define FICHIER_STRUCTURE_H
 
 #include <stdio.h>
 #include <stdlib.h>

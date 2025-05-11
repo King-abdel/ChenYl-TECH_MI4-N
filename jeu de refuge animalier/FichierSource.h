@@ -6,7 +6,7 @@
 #include <sys/types.h>
 
 void ajouter_animal();
-int RechercheAnimal();
+void rechercher_animaux();
 void adopter_animal();
 void afficheAnimal(Animal a, int choix);
 int day_clean();

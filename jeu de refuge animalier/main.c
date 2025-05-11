@@ -1,6 +1,6 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
-#include "Fonction.h"
+
 
 Animal refuge[NbAnimal];
 int nb_animal = 0;
