@@ -3,17 +3,7 @@
 
 // Fonction qui calcule la quantité totale de croquettes nécessaire pour nourrir tous les animaux du refuge en un jour
 void day_food() {
-    int annee_courante;
-
-    // Demande à l'utilisateur de saisir l'année actuelle (doit être positive)
-    do {
-        printf("\n Entrez l'année actuelle : ");
-        scanf("%d", &annee_courante);
-
-        // Cette ligne permet de lire et d'ignorer les caractères restants (comme la touche Entrée)
-        // pour éviter des erreurs lors de la prochaine lecture clavier
-        while (getchar() != '\n');
-    } while (annee_courante < 0); // Recommence si l'année est invalide
+    int annee_courante = AnneeCourante();
 
     float total_croquettes_kg = 0.0; // Initialisation du total de croquettes en kg
 

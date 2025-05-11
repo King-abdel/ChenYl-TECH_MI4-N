@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+int AnneeCourante();
 void ajouter_animal();
 void rechercher_animaux();
 void adopter_animal();
@@ -14,7 +15,7 @@ void day_food();
 void afficherInventaireNbDesc();
 void modifierAnimal();
 void charger_animaux();
-int sauvegarder_animaux();
+void sauvegarder_animaux(const char* filename);
 #endif 
 
 

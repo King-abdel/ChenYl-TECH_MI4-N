@@ -1,6 +1,13 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
 
+int AnneeCourante(){
+    int annee_actuel;
+    time_t ts = time(NULL); //time_t permet de déclarer une variable en seconde depuis 1970. time(NULL) c'est une fonction qui sert à obtenir le temps actuel en seconde. 
+    annee_actuel = 1970 + (ts/(60*60*24*365)); // on fait la conversion de ts en année puis on ajoute 1970.
+    return annee_actuel;
+ } 
+
 // Fonction permettant de rechercher des animaux selon plusieurs critères (nom, espèce, âge)
 void rechercher_animaux() {
     Animal a;                      // Variable  pour parcourir le tableau
@@ -49,7 +56,7 @@ void rechercher_animaux() {
     }
 
     int trouve = 0;                // Marqueur pour savoir si un animal a été trouvé
-    int annee_courante = 2025;     // Année actuelle pour le calcul de l’âge
+    int annee_courante = AnneeCourante();     // Année actuelle pour le calcul de l’âge
 
     // Parcours de tous les animaux du refuge
     for (int i = 0; i < nb_animal; i++) {
