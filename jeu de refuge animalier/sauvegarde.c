@@ -5,7 +5,7 @@
 void sauvegarder_animaux() {
     // Création du dossier "sauvegardes" 
     mkdir("sauvegardes", 0777);
-    if (mkdir("sauvegardes", 0777) == -1 && errno != EEXIST) {
+    if (mkdir("sauvegardes", 0777) == -1) {
     	perror("Erreur de création du répertoire");
     return;
 }
