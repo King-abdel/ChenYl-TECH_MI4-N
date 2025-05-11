@@ -1,7 +1,7 @@
 #include "FichierStructure.h"  
 #include "FichierSource.h" 
 
-  // Fonction permettant de modifier les informations d’un animal identifié par son ID
+// Fonction permettant de modifier les informations d’un animal identifié par son ID
 void modifierAnimal() {
     int id;         // Variable  de l’id saisi par l’utilisateur
     int trouve = 0; // Marqueur pour vérifier si l’animal a été trouvé
@@ -83,9 +83,3 @@ void modifierAnimal() {
     // Sauvegarde les changements dans le fichier
     sauvegarder_animaux(); 
 }
-
-
-    // Sauvegarde les modifications dans le fichier
-    sauvegarder_animaux(); // Sauvegarde tous les animaux, y compris le modifié
-}
-
