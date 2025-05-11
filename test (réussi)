@@ -62,17 +62,24 @@ void afficheAnimale(Animal a, int choix){
 
     printf("-----\n");  
 }
-	
+
+// Fonction pour sauvegarder les animaux depuis un fichier
 void sauvegarder_animaux() {
-    const char* filename = "animaux.txt";
-    FILE* file = fopen(filename, "w");
-    if (!file) {
+    // Création du dossier "sauvegardes" 
+    mkdir("sauvegardes", 0777);
+
+    // Nom de fichier fixe (toujours le même)
+    const char* fichier = "animaux.txt";
+
+    // Ouverture du fichier en écriture (écrase l'ancien)
+    FILE* F = fopen(fichier, "w");
+    if (F=NULL) {
         perror("Erreur d'ouverture du fichier de sauvegarde");
         return;
     }
 
+    // Écriture des données
     for (int i = 0; i < nb_animal; i++) {
-        // Écrit dans le fichier avec contrôle de sécurité (surtout utile si les chaînes venaient d'une source externe)
         fprintf(file, "%d;%s;%d;%d;%.2f;%s\n",
                 refuge[i].id,
                 refuge[i].nom,
@@ -82,7 +89,7 @@ void sauvegarder_animaux() {
                 refuge[i].descrip);
     }
 
-    fclose(file);
+    fclose(F);
 }
 
 
