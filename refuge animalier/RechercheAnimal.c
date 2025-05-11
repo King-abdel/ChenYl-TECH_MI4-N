@@ -25,7 +25,8 @@ void rechercher_animaux() {
             printf("Nom : \n");
             fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
             a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
-        }while(a.nom[0]== '\0');
+        }while(strlen(refuge[0].nom) == 0);
+
     }
 
     // Demande si l'utilisateur veut filtrer par espèce
