@@ -350,7 +350,7 @@ void modifierAnimal() {
 				refuge[i].nom[strcspn(refuge[i].nom, "\n")] = '\0'; // supprime \n
 
 				if (strlen(refuge[i].nom) == 0) {
-				printf("⚠️ Le nom ne peut pas être vide. Réessaie.\n");
+				printf(" Le nom ne peut pas être vide. Réessaie.\n");
 					}
 		
 				} 
