@@ -64,62 +64,49 @@ void afficheAnimale(Animal a, int choix){
 }
 	
 // Fonction pour sauvegarder la liste des animaux dans un fichier texte
-int sauvegarder_animaux() {
-    // Crée le dossier "refuge" s'il n'existe pas (0777 = permissions maximales)
-    mkdir("refuge", 0777);
-    // Crée le sous-dossier "refuge/sauvegarde"
-    mkdir("refuge/sauvegarde", 0777);
-
-    // Récupère la date et l'heure actuelles
-    time_t now = time(NULL);
-    struct tm *t = localtime(&now);  // Convertit en structure de date lisible
-
-    // Génère un nom de fichier avec la date : animaux_YYYY-MM-DD.txt
-    char filename[200];
-    sprintf(filename, "refuge/sauvegarde/animaux_%04d-%02d-%02d.txt",
-            t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
-
-    // Ouvre le fichier en écriture
-    FILE *f = fopen(filename, "w");
-    if (f == NULL) {
-        // Affiche un message d'erreur si le fichier ne peut pas être ouvert
-        printf(" Erreur : impossible d’ouvrir %s\n", filename);
-        return 1;
+void sauvegarder_animaux(const char* filename) {
+    FILE* file = fopen(filename, "w");
+    if (!file) {
+        perror("Erreur d'ouverture du fichier de sauvegarde");
+        return;
     }
 
-    // Parcourt la liste des animaux et écrit chaque animal dans le fichier
+    // Utilisation de nb_animal pour parcourir les animaux ajoutés dans le refuge
     for (int i = 0; i < nb_animal; i++) {
-        Animal a = refuge[i];
-        // Écrit les infos de l’animal séparées par des points-virgules
-        fprintf(f, "%d;%d;%f;%d;%s;%s\n", a.id, a.annee, a.poids, a.espece, a.nom, a.descrip);
+        fprintf(file, "%d;%s;%d;%d;%.2f;%s\n",
+                refuge[i].id,
+                refuge[i].nom,          // nom de l'animal
+                refuge[i].espece,       // espèce de l'animal
+                refuge[i].annee,        // année de naissance
+                refuge[i].poids,        // poids de l'animal
+                refuge[i].descrip);     // description de l'animal
     }
 
-    // Ferme le fichier après écriture
-    fclose(f);
-
-    // Confirme que la sauvegarde s’est bien passée
-    printf("💾 Sauvegarde réussie dans %s\n", filename);
-    return 0;  // Retourne 0 pour indiquer que tout s'est bien passé
+    fclose(file);
 }
 
 
-void charger_animaux() {
-    FILE *f = fopen("animaux.txt", "r");  // Ouvre le fichier en lecture
-    if (!f) return;  // Si le fichier n'existe pas ou ne peut pas être ouvert on quitte la fonction
-
-    Animal a;  // Variable temporaire pour stocker chaque animal lu
-
-    // Lecture ligne par ligne des animaux depuis le fichier
-    while (fscanf(f, "%d;%d;%f;%d;%[^;];%[^\n]\n",
-                  &a.id, &a.annee, &a.poids, (int*)&a.espece, a.nom, a.descrip) == 6) {
-        refuge[nb_animal++] = a;  // Ajoute l’animal lu dans le tableau refuge et incrémente le nombre
-
-        // Met à jour le prochain ID si nécessaire pour éviter les doublons
-        if (a.id >= prochain_id) 
-            prochain_id = a.id + 1;
+// Fonction pour charger les animaux depuis un fichier
+void charger_animaux(const char* filename) {
+    FILE* file = fopen(filename, "r");
+    if (!file) {
+        perror("Fichier introuvable ou erreur d'ouverture");
+        return;
     }
 
-    fclose(f);  // Ferme le fichier après avoir fini de lire
+    // Utilisation de nb_animal pour charger les animaux du fichier
+    while (fscanf(file, "%d;%99[^;];%d;%d;%f;%199[^\n]\n", 
+                  &refuge[nb_animal].id,
+                  refuge[nb_animal].nom,
+                  &refuge[nb_animal].espece,
+                  &refuge[nb_animal].annee,
+                  &refuge[nb_animal].poids,
+                  refuge[nb_animal].descrip) == 6) {
+        nb_animal++;  // Incrémentation du nombre d'animaux chargés
+        if (nb_animal >= NbAnimal) break;  // Stop si on atteint la capacité maximale
+    }
+
+    fclose(file);
 }
 
 // Fonction pour ajouter un animal au refuge
