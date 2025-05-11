@@ -69,7 +69,7 @@ void sauvegarder_animaux() {
     mkdir("sauvegardes", 0777);
 
     // Nom de fichier fixe (toujours le même)
-    const char* fichier = "animaux.txt";
+    const char* fichier = "sauvegardes/animaux.txt";
 
     // Ouverture du fichier en écriture (écrase l'ancien)
     FILE* F = fopen(fichier, "w");
@@ -95,7 +95,7 @@ void sauvegarder_animaux() {
 
 // Fonction pour charger les animaux depuis un fichier
 void charger_animaux() {
-    const char* fichier = "animaux.txt";
+    const char* fichier = "sauvegardes/animaux.txt";
     FILE* F = fopen(fichier, "r");
     if (F==NULL) {
         perror("Fichier introuvable ou erreur d'ouverture");
