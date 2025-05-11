@@ -61,7 +61,7 @@ void ajouter_animal() { 		// Fonction pour ajouter un animal au refuge
             printf("Année de naissance : ");
             scanf("%d", &a.annee);
             while (getchar() != '\n');  
-        } while(a.annee < 0);
+        } while(a.annee < 0 || a.annee > 2025);
         
         // Saisie du poids 
         do {
