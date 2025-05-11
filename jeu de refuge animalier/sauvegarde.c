@@ -5,12 +5,8 @@
 void sauvegarder_animaux() {
     // Création du dossier "sauvegardes" 
     mkdir("sauvegardes", 0777);
-    if (mkdir("sauvegardes", 0777) == -1 && errno != EEXIST) {
-    	perror("Erreur de création du répertoire");
-    return;
-}
-
-    // Nom de fichier fixe (toujours le même)
+    
+    // Nom de fichier fixe 
     const char* fichier = "animaux.txt";
 
     // Ouverture du fichier en écriture (écrase l'ancien)
