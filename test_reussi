@@ -8,25 +8,25 @@
 #define MAX 1000
 
 
-typedef enum{
-    chien = 1, 
-    chat, 
+typedef enum {
+    chien = 1,
+    chat,
     hamster,
     autruche
-}Espece;
+} Espece;
 
-typedef struct{
+typedef struct {
     int id;
     int annee;
     float poids;
     char nom[MAX];
     char descrip[MAX];
     Espece espece;
-}Animal;
+} Animal;
 
-Animal refuge[NbAnimal];        // tableau d'animal qui stocke les animaux de tout le refuge
-int nb_animal= 0;               // initialise le nombre d'animaux à 0
-int prochain_id=1;
+extern Animal refuge[NbAnimal];
+extern int nb_animal;
+extern int prochain_id;
 
 // Fonction pour afficher les informations d’un animal
 void afficheAnimal(Animal a, int choix){
@@ -132,7 +132,8 @@ void ajouter_animal() {
         printf("Nom : ");
         fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
         a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
-    }while(a.nom[0]== '\0');
+        } while (strlen(a.nom) == 0);
+
 
         // Saisie du type d'espèce 
         do {
@@ -169,7 +170,7 @@ void ajouter_animal() {
             printf("Description : \n");
             fgets(a.descrip, MAX, stdin);                    
             a.descrip[strcspn(a.descrip, "\n")] = '\0';
-            }while(a.descrip[0]== '\0');      
+            } while (strlen(a.descrip) == 0);     
         }
 
         // Ajout de l'animal au tableau refuge 
@@ -185,7 +186,6 @@ void ajouter_animal() {
     }
 }
 
-
 // Fonction qui permet d’adopter (supprimer) un animal du refuge selon son identifiant
 void adopter_animal() {
     int id;  // Variable de l'id de l’animal à adopter 
@@ -197,12 +197,12 @@ void adopter_animal() {
         while (getchar() != '\n');  // supprimer le '\n' du tampon
     } while (id <= 0);  // L’ID doit être strictement positif
 
-    int trouvé = 0;  // Marqueur pour savoir si l’animal correspondant à l’id a été trouvé
+    int trouve = 0;  // Marqueur pour savoir si l’animal correspondant à l’id a été trouvé
 
     // Parcours du tableau des animaux
     for (int i = 0; i < nb_animal; i++) {
         if (refuge[i].id == id) {  // Si l'id de l'animal correspond à celui recherché
-            trouvé = 1;            //  on a trouvé l’animal
+            trouve = 1;            //  on a trouvé l’animal
 
             printf("Animal trouvé :\n");
             afficheAnimal(refuge[i], 1);  // Affiche les détails de l’animal trouvé
@@ -219,7 +219,7 @@ void adopter_animal() {
     }
 
     // le cas où aucun animal n’a été trouvé avec l’ID saisi
-    if (trouvé == 0) {
+    if (trouve == 0) {
         printf("Aucun animal trouvé avec l'ID %d.\n", id);
     }
 
@@ -249,9 +249,10 @@ void rechercher_animaux() {
     if (critere_nom == 1) {
         do{
             printf("Nom : \n");
-            fgets(a.nom, MAX, stdin);       // lire une chaîne avec espaces
-            a.nom[strcspn(a.nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
-        }while(a.nom[0]== '\0');
+            fgets(nom, MAX, stdin);       // lire une chaîne avec espaces
+            nom[strcspn(nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
+        }while(strlen(nom) == 0);
+
     }
 
     // Demande si l'utilisateur veut filtrer par espèce
@@ -344,17 +345,15 @@ void modifierAnimal() {
             // on modifie le critère correspondant
             switch (modif) {
                 case 1: // Modification du nom
-                 do {
-				printf("Nouveau nom : ");
-				fgets(refuge[i].nom, MAX, stdin);
-				refuge[i].nom[strcspn(refuge[i].nom, "\n")] = '\0'; // supprime \n
+                    do{
+                        printf("Nouveau nom : ");
+                        fgets(refuge[i].nom, MAX, stdin); // Lire une chaîne avec des espaces
+                        refuge[i].nom[strcspn(refuge[i].nom, "\n")] = '\0'; // enlève le '\n' de la chaîne
+                    }while(strlen(refuge[i].nom) == 0);
 
-				if (strlen(refuge[i].nom) == 0) {
-				printf(" Le nom ne peut pas être vide. Réessaie.\n");
-					}
-		
-				} 
-				while (strlen(refuge[i].nom) == 0);
+
+                    break;
+
                 case 2: // Modification de l’année de naissance
                     do {
                         printf("Nouvelle année de naissance : ");
@@ -380,9 +379,11 @@ void modifierAnimal() {
                     break;
 
                 case 5: // Modification de la description
+                    do{
                     printf("Nouvelle description : ");
                     fgets(refuge[i].descrip, MAX, stdin);
                     refuge[i].descrip[strcspn(refuge[i].descrip, "\n")] = '\0'; 
+                    } while (strlen(refuge[i].descrip) == 0);
                     break;
             }
 
@@ -530,6 +531,11 @@ int day_clean() {
 }
 
 
+
+    refuge[NbAnimal];
+    nb_animal =0;
+    prochain_id = 1;
+
 void afficherBanniere() {
     printf("\033[1;34m"); 
      printf("\n");
@@ -555,7 +561,7 @@ int afficherMenu() {
     printf("                              |   3. 🏠 Adopter un animal                                    |\n");
     printf("                              |   4. 📦 Afficher l'inventaire                                |\n");
     printf("                              |   5. 🧽 Afficher la charge de nettoyage hebdomadaire         |\n");
-    printf("                              |   6. 🍽️ Afficher la quantité de nourriture quotidienne       |\n");
+    printf("                              |   6. 🍽️ Afficher la quantité de nourriture quotidienne        |\n");
     printf("                              |   7. 📝 Modifier les informations d’un animal                |\n");                  
     printf("                              |   8. ❌ Quitter le programme                                 |\n");
     printf("                              |______________________________________________________________|\n");
@@ -637,7 +643,7 @@ int main(){
         }
 }
     while(a != 8){
-	   a= afficherMenu();
+	a= afficherMenu();
     }
 	
 return 0;
