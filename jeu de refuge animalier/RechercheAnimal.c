@@ -60,6 +60,7 @@ int Verification(Animal *tab[], char nom[], int critere_n, int critere_e, int cr
         }
         else if(critere_a == 1){
             afficheAnimal(*tab[i]);
+            return 0;
         }
     }
     printf("Aucan animal trouvé !\n");
@@ -90,8 +91,8 @@ int RechercheAnimal(){
     critere_nom = Validation(critere_nom);
     if (critere_nom == 1) {
         printf("Entrez le nom : ");
-        fgets(nom, MAX, stdin);                     // lire une chaîne avec des espaces
-        nom[strcspn(nom, "\n")] = '\0';             // enlève du \n dans la chaîne
+        fgets(n, MAX, stdin);                     // lire une chaîne avec des espaces
+        n[strcspn(n, "\n")] = '\0';             // enlève du \n dans la chaîne
     }
 
     // Demande si l'utilisateur veut filtrer par espèce
