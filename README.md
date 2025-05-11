@@ -41,11 +41,11 @@ Ce programme en langage C permet de gérer un refuge animalier. Il offre un menu
 ### ✅ Compilation
 ```bash
 make
-``
+````
 
 ### ▶️ Exécution
 ```bash
-./refuge
+./maker
 ```
 
 ## 🗃️ Fichier `animaux.txt`
