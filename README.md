@@ -40,8 +40,8 @@ Ce programme en langage C permet de gérer un refuge animalier. Il offre un menu
 
 ### ✅ Compilation
 ```bash
-gcc -o refuge refuge.c
-```
+make
+``
 
 ### ▶️ Exécution
 ```bash

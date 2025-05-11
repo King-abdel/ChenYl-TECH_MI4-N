@@ -1,0 +1,54 @@
+Rapport de Projet — Gestion d’un Refuge d’Animaux
+
+1. Introduction
+
+1.1 Présentation de l'équipe
+Nous sommes trois étudiants en première année de classe préparatoire intégrée à l’ECE (PreIng1). 
+Dans le cadre de notre projet d’informatique, nous avons réalisé une application en langage C dédiée à la gestion d’un refuge animalier.
+
+Membres du groupe :
+- AZAM Zain
+- BOURAS Abdelrahmen
+- GHAZI Moulay-Youssef
+
+1.2 Sujet du projet
+Ce projet consiste à développer une application console pour gérer un refuge d’animaux. 
+Elle permet d’ajouter, rechercher, modifier ou adopter des animaux, mais aussi de gérer des aspects logistiques comme la nourriture ou le nettoyage. 
+Les données sont sauvegardées automatiquement dans un fichier.
+
+2. Problèmes rencontrés et solutions apportées
+
+Problème : Structuration du code
+Solution : Nous avons séparé les fonctionnalités dans des fonctions distinctes pour rendre le programme plus lisible.
+
+Problème : Persistance des données
+Solution : Nous avons mis en place un système de sauvegarde et de chargement à partir d’un fichier .txt.
+
+Problème : Organisation du travail
+Solution : Nous avons utilisé GitHub et WhatsApp pour partager le code et suivre l’avancement.
+
+3. Organisation du travail
+
+3.1 Répartition des tâches
+Le travail a été réparti entre les membres, chacun prenant en charge certaines fonctionnalités. 
+Nous avons fait des points réguliers pour vérifier la cohérence du projet et nous entraider si besoin.
+
+3.2 Outils utilisés
+- Visual Studio Code pour coder
+- GitHub pour la gestion de version
+- WhatsApp et Discord pour la communication
+
+4. Résultats obtenus
+L’application finale permet de gérer un refuge de manière fluide grâce aux fonctionnalités suivantes :
+- Ajout d’un animal avec description facultative
+- Recherche multi-critères (nom, espèce, âge)
+- Modification des informations d’un animal
+- Adoption (suppression) d’un animal
+- Affichage de l’inventaire global et par espèce
+- Calcul de la charge de nettoyage hebdomadaire
+- Estimation de la quantité de nourriture quotidienne
+- Sauvegarde et chargement automatique des données
+
+5. Conclusion
+Ce projet nous a permis d’appliquer concrètement notre apprentissage du langage C. 
+Nous avons aussi appris à structurer notre code, à mieux travailler en équipe, et à organiser un projet complet de A à Z.

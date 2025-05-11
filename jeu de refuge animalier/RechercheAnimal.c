@@ -90,10 +90,11 @@ int RechercheAnimal(){
     critere_nom = Validation(critere_nom);
     if (critere_nom == 1) {
         printf("Entrez le nom : ");
-        fgets(n, 50,stdin);
-        n[strcspn(n, "\n")] = '\0';
+        fgets(nom, MAX, stdin);                     // lire une chaîne avec des espaces
+        nom[strcspn(nom, "\n")] = '\0';             // enlève du \n dans la chaîne
     }
 
+    // Demande si l'utilisateur veut filtrer par espèce
     printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
     scanf("%d", &critere_espece);
     while (getchar() != '\n');
@@ -102,6 +103,7 @@ int RechercheAnimal(){
         e = ChoisirEspece();
     }
 
+    // Demande si l'utilisateur veut filtrer par âge
     printf("Rechercher par type d'âge ? (1:Oui / 0:Non) : ");
     scanf("%d", &critere_age);
     while (getchar() != '\n');
