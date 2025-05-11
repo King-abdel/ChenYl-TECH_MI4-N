@@ -80,7 +80,7 @@ void sauvegarder_animaux() {
 
     // Écriture des données
     for (int i = 0; i < nb_animal; i++) {
-        fprintf(file, "%d;%s;%d;%d;%.2f;%s\n",
+        fprintf(F, "%d;%s;%d;%d;%.2f;%s\n",
                 refuge[i].id,
                 refuge[i].nom,
                 refuge[i].espece,
@@ -105,7 +105,7 @@ void charger_animaux() {
     nb_animal = 0;  // Réinitialise le compteur avant chargement
 
     while (nb_animal < NbAnimal &&
-           fscanf(file, "%d;%999[^;];%d;%d;%f;%999[^\n]\n",
+           fscanf(F, "%d;%999[^;];%d;%d;%f;%999[^\n]\n",
                   &refuge[nb_animal].id,
                   refuge[nb_animal].nom,
                   &refuge[nb_animal].espece,
