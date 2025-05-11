@@ -39,7 +39,7 @@ void modifierAnimal() {
                         printf("Nouveau nom : ");
                         fgets(refuge[i].nom, MAX, stdin); // Lire une chaîne avec des espaces
                         refuge[i].nom[strcspn(refuge[i].nom, "\n")] = '\0'; // enlève le '\n' de la chaîne
-                    }while(strlen(refuge[0].nom) == 0);
+                    }while(strlen(refuge[i].nom) == 0);
 
 
                     break;
@@ -73,7 +73,7 @@ void modifierAnimal() {
                     printf("Nouvelle description : ");
                     fgets(refuge[i].descrip, MAX, stdin);
                     refuge[i].descrip[strcspn(refuge[i].descrip, "\n")] = '\0'; 
-                    } while (strlen(refuge[0].nom) == 0);
+                    } while (strlen(refuge[i].descrip) == 0);
                     break;
             }
 
