@@ -1,4 +1,5 @@
 #include "FichierStructure.h"
+#include "FichierSource.h"
 
 void charger_animaux() {
     FILE *f = fopen("animaux.txt", "r");  // Ouvre le fichier en lecture

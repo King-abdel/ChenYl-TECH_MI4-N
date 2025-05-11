@@ -1,4 +1,5 @@
-#include "FichierStructure"
+#include "FichierStructure.h"
+#include "FichierSource.h"
 
 // Fonction pour sauvegarder la liste des animaux dans un fichier texte
 int sauvegarder_animaux() {

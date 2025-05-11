@@ -1,11 +1,11 @@
 # Compilateur
 CC = gcc
 
-# Options de compilation
+# compilation
 CFLAGS = -Wall -Wextra -std=c99
 
 # Fichiers sources
-SRC = FonctionPrincipale.c AjouterAnimal.c AdopterAnimal.c RechercheAnimal.c affiche_inventaire.c variante_Dayclean.c
+SRC = FonctionPrincipale.c AjouterAnimal.c AdopterAnimal.c affiche_inventaire.c charger_animaux.c Day_clean.c Day_Food.c ModifierAnimal.c RechercheAnimal.c sauvegarde.c 
 
 # Fichiers d'en-tête
 HEADERS = FichierStructure.h FichierSource.h

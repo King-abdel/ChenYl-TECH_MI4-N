@@ -46,20 +46,20 @@ int Verification(Animal *tab[], char nom[], int critere_n, int critere_e, int cr
     for(i = 0; i< taille; i++){
         if(critere_n == 1 || critere_e == 1 ){
             if(strcmp(tab[i]->nom, nom) == 0 && tab[i]->espece == espece ){
-                afficheAnimal(*tab[i]);
+                afficheAnimal(*tab[i], 1);
                 return 0;
             }
             else if(critere_e == 0 && strcmp(tab[i]->nom, nom) == 0){
-                afficheAnimal(*tab[i]);
+                afficheAnimal(*tab[i], 1);
                 return 0;
             }
              else if(critere_n == 0 && tab[i]->espece == espece){
-                afficheAnimal(*tab[i]);
+                afficheAnimal(*tab[i], 1);
                 return 0;
             }
         }
         else if(critere_a == 1){
-            afficheAnimal(*tab[i]);
+            afficheAnimal(*tab[i], 1);
             return 0;
         }
     }
@@ -80,7 +80,7 @@ int RechercheAnimal(){
     char n[MAX];
     Espece e;
     int critere_nom , critere_espece, critere_age, age_type;
-    int i, a, b, c;
+    int a, b, c;
     Animal *enfant[NbAnimal];  
     Animal *jeune[NbAnimal];
     Animal *senior[NbAnimal];

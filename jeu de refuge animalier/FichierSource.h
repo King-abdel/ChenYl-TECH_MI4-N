@@ -1,15 +1,14 @@
 #ifndef FICHIER_SOURCE_H
 #define FICHIER_SOURCE_H
+
 #include "FichierStructure.h"
 #include <sys/stat.h>
 #include <sys/types.h>
 
-void afficherBanniere();
-int afficherMenu();
 void ajouter_animal();
 int RechercheAnimal();
 void adopter_animal();
-void afficheAnimale (Animal a);
+void afficheAnimal(Animal a, int choix);
 int day_clean();
 void day_food();
 void afficherInventaireNbDesc();

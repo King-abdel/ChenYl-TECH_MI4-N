@@ -19,7 +19,7 @@ void modifierAnimal() {
             trouve = 1; // L’animal est trouvé
 
             // Affiche les caractéristiques de l’animal avant modification
-            afficheAnimale(refuge[i], 1);
+            afficheAnimal(refuge[i], 1);
 
             int modif; // Variable pour le choix de l’utilisateur
 
@@ -49,7 +49,7 @@ void modifierAnimal() {
                 case 3: // Modification de l’espèce
                     do {
                         printf("Nouvelle espèce (1=chien, 2=chat, 3=hamster, 4=autruche) : ");
-                        scanf("%d", &refuge[i].espece); 
+                        scanf("%d", (int*)&refuge[i].espece); 
                         while (getchar() != '\n');
                     } while (refuge[i].espece < 1 || refuge[i].espece > 4);
                     break;
@@ -70,7 +70,7 @@ void modifierAnimal() {
             }
 
             printf("✅ Animal modifié avec succès !\n");
-            afficheAnimale(refuge[i], 1); // Affiche les nouvelles informations après les modifications
+            afficheAnimal(refuge[i], 1); // Affiche les nouvelles informations après les modifications
             break; // Sortir de la boucle 
         }
     }

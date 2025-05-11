@@ -20,7 +20,7 @@ void adopter_animal() {
             trouvé = 1;            //  on a trouvé l’animal
 
             printf("Animal trouvé :\n");
-            afficheAnimale(refuge[i], 1);  // Affiche les détails de l’animal trouvé
+            afficheAnimal(refuge[i], 1);  // Affiche les détails de l’animal trouvé
 
             // Réajustement des indices : on décale les animaux suivants d’une position vers la gauche
             for (int j = i; j < nb_animal - 1; j++) {

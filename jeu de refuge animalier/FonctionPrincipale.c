@@ -57,7 +57,7 @@ scanf("%d", &choix);
         case 5:
             printf("→ [Afficher charge de travail] 🧳\n");
                 {
-            int total_minutes = calculer_charge_nettoyage_hebdomadaire();
+            int total_minutes = day_clean();
             int heures = total_minutes / 60;
             int minutes = total_minutes % 60;
     
@@ -67,7 +67,7 @@ scanf("%d", &choix);
             break;
         case 6:
             printf("→ [Afficher la quantité de croquettes] 🍽️\n");
-            DAY_FOOD();
+            day_food();
             break;
         case 7:
             printf("Au revoir ! 👋\n");
