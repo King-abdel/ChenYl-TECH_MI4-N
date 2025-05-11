@@ -2,7 +2,7 @@
 #include "FichierSource.h"
 
 // Fonction pour afficher les informations d’un animal
-void afficheAnimale(Animal a, int choix){
+void afficheAnimal(Animal a, int choix){
     printf("-----\n");  
     printf("Nom : %s\n", a.nom);         // Affichage du nom de l’animal
     printf("id : %d\n", a.id);           // Affichage de l’id
