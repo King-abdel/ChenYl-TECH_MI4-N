@@ -35,9 +35,12 @@ void modifierAnimal() {
             // on modifie le critère correspondant
             switch (modif) {
                 case 1: // Modification du nom
-                    printf("Nouveau nom : ");
-                    fgets(refuge[i].nom, MAX, stdin); // Lire une chaîne avec des espaces
-                    refuge[i].nom[strcspn(refuge[i].nom, "\n")] = '\0'; // enlève le '\n' de la chaîne
+                    do{
+                        printf("Nouveau nom : ");
+                        fgets(refuge[i].nom, MAX, stdin); // Lire une chaîne avec des espaces
+                        refuge[i].nom[strcspn(refuge[i].nom, "\n")] = '\0'; // enlève le '\n' de la chaîne
+                    }while(refuge[i].nom == '\0');
+
                     break;
 
                 case 2: // Modification de l’année de naissance
