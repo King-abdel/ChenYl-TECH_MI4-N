@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #define NbAnimal 50
 #define MAX 1000
 
@@ -60,51 +62,60 @@ void afficheAnimale(Animal a, int choix){
 
     printf("-----\n");  
 }
-	
-// Fonction pour sauvegarder la liste des animaux dans un fichier texte
-void sauvegarder_animaux(const char* filename) {
-    FILE* file = fopen(filename, "w");
-    if (!file) {
+
+// Fonction pour sauvegarder les animaux depuis un fichier
+void sauvegarder_animaux() {
+    // Création du dossier "sauvegardes" 
+    mkdir("sauvegardes", 0777);
+
+    // Nom de fichier fixe (toujours le même)
+    const char* fichier = "animaux.txt";
+
+    // Ouverture du fichier en écriture (écrase l'ancien)
+    FILE* F = fopen(fichier, "w");
+    if (F==NULL) {
         perror("Erreur d'ouverture du fichier de sauvegarde");
         return;
     }
 
-    // Utilisation de nb_animal pour parcourir les animaux ajoutés dans le refuge
+    // Écriture des données
     for (int i = 0; i < nb_animal; i++) {
-        fprintf(file, "%d;%s;%d;%d;%.2f;%s\n",
+        fprintf(F, "%d;%s;%d;%d;%.2f;%s\n",
                 refuge[i].id,
-                refuge[i].nom,          // nom de l'animal
-                refuge[i].espece,       // espèce de l'animal
-                refuge[i].annee,        // année de naissance
-                refuge[i].poids,        // poids de l'animal
-                refuge[i].descrip);     // description de l'animal
+                refuge[i].nom,
+                refuge[i].espece,
+                refuge[i].annee,
+                refuge[i].poids,
+                refuge[i].descrip);
     }
 
-    fclose(file);
+    fclose(F);
 }
 
 
 // Fonction pour charger les animaux depuis un fichier
-void charger_animaux(const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (!file) {
+void charger_animaux() {
+    const char* fichier = "animaux.txt";
+    FILE* F = fopen(fichier, "r");
+    if (F==NULL) {
         perror("Fichier introuvable ou erreur d'ouverture");
         return;
     }
 
-    // Utilisation de nb_animal pour charger les animaux du fichier
-    while (fscanf(file, "%d;%99[^;];%d;%d;%f;%199[^\n]\n", 
+    nb_animal = 0;  // Réinitialise le compteur avant chargement
+
+    while (nb_animal < NbAnimal &&
+           fscanf(F, "%d;%999[^;];%d;%d;%f;%999[^\n]\n",
                   &refuge[nb_animal].id,
                   refuge[nb_animal].nom,
                   &refuge[nb_animal].espece,
                   &refuge[nb_animal].annee,
                   &refuge[nb_animal].poids,
                   refuge[nb_animal].descrip) == 6) {
-        nb_animal++;  // Incrémentation du nombre d'animaux chargés
-        if (nb_animal >= NbAnimal) break;  // Stop si on atteint la capacité maximale
+        nb_animal++;
     }
 
-    fclose(file);
+    fclose(F);
 }
 
 // Fonction pour ajouter un animal au refuge
