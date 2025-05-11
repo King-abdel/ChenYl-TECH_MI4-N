@@ -3,41 +3,22 @@
 
 Espece ChoisirEspece(){
     int a;
-    printf("Choisissez l'espèce de l'animal :\n");
-    printf("1 : Chien\n");
-    printf("2 : Chat\n");
-    printf("3 : Hamster\n");
-    printf("4 : Autruche\n");
-    printf("choix : ");
+    printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
     scanf("%d", &a);
+    while (getchar() != '\n');
     while(a < 1 || a > 4){
         scanf("%d", &a);
+        while (getchar() != '\n');
     }
-    return (Espece)a;   //switch case ne marche pas avec moi.
+    return (Espece)a;  
 }
-/*
-int AnneeCouranteBessixtille(){
-    int annee_actuel;
-    time_t ts = time(NULL);   
-    annee_actuel = 1970 + (ts/(60*60*24*366));  // on change le nombre de jours de 365 à 366.
-    return annee_actuel;
- }
-*/
+
 int AnneeCourante(){
     int annee_actuel;
     time_t ts = time(NULL);    //time_t permet de déclarer une variable en seconde depuis 1970. time(NULL) c'est une fonction qui sert à obtenir le temps actuel en seconde. 
     annee_actuel = 1970 + (ts/(60*60*24*365));   // on fait la conversion de ts en année puis on ajoute 1970.
-    // annee_actuel = VerificationAnnee(annee_actuel);
     return annee_actuel;
  } 
-/*
- int VerificationAnnee(int a){
-    if(a%400 == 0){
-       a = AnneeCouranteBessixtille();
-    }
-    return a;
- }
-*/
 
 void DecoupageTabAge(Animal *enfant[], Animal *jeune[], Animal *senior[], int *e, int *j, int *s) {
     int i;
@@ -60,23 +41,53 @@ void DecoupageTabAge(Animal *enfant[], Animal *jeune[], Animal *senior[], int *e
     }
 }
 
+int Verification(Animal *tab[], char nom[], int critere_n, int critere_e, int critere_a, int taille, Espece espece){
+    int i;
+    for(i = 0; i< taille; i++){
+        if(critere_n == 1 || critere_e == 1 ){
+            if(strcmp(tab[i]->nom, nom) == 0 && tab[i]->espece == espece ){
+                afficheAnimal(*tab[i]);
+                return 0;
+            }
+            else if(critere_e == 0 && strcmp(tab[i]->nom, nom) == 0){
+                afficheAnimal(*tab[i]);
+                return 0;
+            }
+             else if(critere_n == 0 && tab[i]->espece == espece){
+                afficheAnimal(*tab[i]);
+                return 0;
+            }
+        }
+        else if(critere_a == 1){
+            afficheAnimal(*tab[i]);
+        }
+    }
+    printf("Aucan animal trouvé !\n");
+    return 1;
+}
 
+int Validation(int critere){
+    while(critere != 0 && critere != 1){
+        printf("Choix invalide !");
+        scanf("%d", &critere);
+        while (getchar() != '\n');
+    }
+    return critere;
+}
 
-    int RechercheAnimal(){
-        char n[50];
-        Espece e;
-        int critere_nom , critere_espece, critere_age;
-        int i, age_type, naissance;
-        int a, b, c;
-        int annee_courante = AnneeCourante();
-        Animal *enfant[NbAnimal];  
-        Animal *jeune[NbAnimal];
-        Animal *senior[NbAnimal];
-        
+int RechercheAnimal(){
+    char n[MAX];
+    Espece e;
+    int critere_nom , critere_espece, critere_age, age_type;
+    int i, a, b, c;
+    Animal *enfant[NbAnimal];  
+    Animal *jeune[NbAnimal];
+    Animal *senior[NbAnimal];
         
     printf("Rechercher par nom ? (1:Oui / 0:Non) : ");
     scanf("%d", &critere_nom);
     while (getchar() != '\n');
+    critere_nom = Validation(critere_nom);
     if (critere_nom == 1) {
         printf("Entrez le nom : ");
         fgets(n, 50,stdin);
@@ -86,114 +97,48 @@ void DecoupageTabAge(Animal *enfant[], Animal *jeune[], Animal *senior[], int *e
     printf("Rechercher par espèce ? (1:Oui / 0:Non) : ");
     scanf("%d", &critere_espece);
     while (getchar() != '\n');
+    critere_espece = Validation(critere_espece);
     if (critere_espece == 1) {
         e = ChoisirEspece();
-        while (getchar() != '\n');
     }
 
     printf("Rechercher par type d'âge ? (1:Oui / 0:Non) : ");
     scanf("%d", &critere_age);
     while (getchar() != '\n');
+    critere_age = Validation(critere_age);
     if (critere_age == 1) {
-        printf("1: Enfant (<2 ans), 2: Senior (>10 ans), 3: Jeune (>2 ans && <10 ans)  ");
+        do{
+        printf("1: Enfant (<2 ans), 2: Jeune (2-10 ans), 3: Sénior (>10 ans) : ");
         scanf("%d", &age_type);
         while (getchar() != '\n');
+        }while( age_type < 1 || age_type > 3);
     }
 
     DecoupageTabAge(enfant, jeune, senior, &a, &b, &c);
 
     if(critere_age == 0){
-        for(i = 0; i< nb_animal; i++){
-            if(critere_nom == 1 && strcmp(refuge[i].nom, n) == 0){
-                    if(critere_espece == 1 && refuge[i].espece == e ){
-                        afficheAnimale(refuge[i]);
-                        return 0;
-                    }
-                    else if(critere_espece == 0){
-                        afficheAnimale(refuge[i]);
-                        return 0;
-                    }
+        if(critere_espece == 1 || critere_nom == 1){
+            Animal *ptrRefuge[NbAnimal];
+            for (int i = 0; i < nb_animal; i++) {
+                ptrRefuge[i] = &refuge[i];
             }
-            else if(critere_nom == 0 && critere_espece == 1 ){
-                if(refuge[i].espece == e){
-                    afficheAnimale(refuge[i]);
-                    return 0;
-                }
-            }
+        Verification(ptrRefuge, n, critere_nom, critere_espece, critere_age, nb_animal, e);
         }
-        printf("Aucan animal trouvé !");
-        return 1;
+        else{
+            printf("Aucun critère de recherche sélectionné. Recherche impossible.\n");
+        }
     }
         
     else if(critere_age == 1){
         if(age_type == 1){
-            printf("l'animal est un enfant \n ");
-            for(i = 0; i < a; i++){
-                if(critere_nom == 1 && strcmp(enfant[i]->nom, n) == 0){
-                    if(critere_espece == 1 && enfant[i]->espece == e ){
-                        afficheAnimale(*enfant[i]);
-                        return 0;
-                    }
-                    else if(critere_espece == 0){
-                        afficheAnimale(*enfant[i]);
-                        return 0;
-                    }
-                }
-                else if(critere_nom == 0 && critere_espece == 1 ){
-                    if(enfant[i]->espece == e){
-                        afficheAnimale(*enfant[i]);
-                        return 0;
-                    }
-                }
-            }
-            printf("ces informations ne correspondent à aucun animal\n");
+            Verification(enfant, n, critere_nom, critere_espece, critere_age, a, e);
         }
-    
-    else if(age_type == 2){
-        printf("l'animal est un sénior \n");
-        for(i = 0; i < c; i++){
-            if(critere_nom == 1 && strcmp(senior[i]->nom, n) == 0){
-                if(critere_espece == 1 && senior[i]->espece == e ){
-                    afficheAnimale(*senior[i]);
-                    return 0;
-                }
-                else if(critere_espece == 0){
-                    afficheAnimale(*senior[i]);
-                    return 0;
-                }
-            }
-            else if(critere_nom == 0 && critere_espece == 1 ){
-                if(senior[i]->espece == e){
-                    afficheAnimale(*senior[i]);
-                    return 0;
-                }
-            }
+        else if(age_type == 2){
+            Verification(jeune, n, critere_nom, critere_espece, critere_age,b, e);
         }
-        printf("ces informations ne correspondent à aucun animal\n");
-    }
-    
         else if(age_type == 3){
-            printf("l'animal est un jeune \n");
-            for(i = 0; i < b; i++){
-                if(critere_nom == 1 && strcmp(jeune[i]->nom, n) == 0){
-                    if(critere_espece == 1 && jeune[i]->espece == e ){
-                        afficheAnimale(*jeune[i]);
-                        return 0;
-                    }
-                    else if(critere_espece == 0){
-                        afficheAnimale(*jeune[i]);
-                        return 0;
-                    }
-                }
-                else if(critere_nom == 0 && critere_espece == 1 ){
-                    if(jeune[i]->espece == e){
-                        afficheAnimale(*jeune[i]);
-                        return 0;
-                    }
-                }
-            }
-            printf("ces informations ne correspondent à aucun animal\n");
-        }   
-         return 1;
+            Verification(senior, n, critere_nom, critere_espece, critere_age,c, e);
+        }
     }	
+    return 1;
 }

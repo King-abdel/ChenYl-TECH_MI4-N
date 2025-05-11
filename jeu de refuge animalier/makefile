@@ -1,6 +1,3 @@
-# Nom de l'exécutable
-EXEC = FonctionPrincipale
-
 # Compilateur
 CC = gcc
 
@@ -8,33 +5,31 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 
 # Fichiers sources
-SRC = FonctionPrincipale.c \
-      AjouterAnimal.c \
-      AdopterAnimal.c \
-      RechercheAnimal.c \
-      affiche_inventaire.c \
-      variante_Dayclean.c 
+SRC = FonctionPrincipale.c AjouterAnimal.c AdopterAnimal.c RechercheAnimal.c affiche_inventaire.c variante_Dayclean.c
 
-# Fichiers d'en-tête (si tu veux une cible pour les vérifier)
+# Fichiers d'en-tête
 HEADERS = FichierStructure.h FichierSource.h
 
-# Objets générés automatiquement à partir des sources
+# Objets générés
 OBJ = $(SRC:.c=.o)
+
+# Nom de l'exécutable
+EXEC = maker
 
 # Cible par défaut
 all: $(EXEC)
 
-# Règle pour l'édition de liens
+# Edition de liens
 $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
-# Compilation de chaque fichier .c en .o
+# Compilation de chaque .c en .o
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Nettoyage des fichiers compilés
+# Nettoyage
 clean:
 	rm -f *.o $(EXEC)
 
-# Forcer la reconstruction complète
+# Rebuild complet
 rebuild: clean all
