@@ -59,13 +59,13 @@ void rechercher_animaux() {
         int repere = 1;  //vérifie si l’animal correspond à tous les filtres
 
         // Filtre par nom 
-        if (critere_nom == 1 && strcmp(a.nom, nom) != 0)
+        if (critere_nom == 1 && strcmp(a.nom, nom) != 0){
             repere = 0;
-
+        }
         // Filtre par espèce
-        if (critere_espece == 1 && a.espece != (Espece)filtre_espece)
+        if (critere_espece == 1 && a.espece != (Espece)filtre_espece){
             repere = 0;
-
+        }
         // Filtre par type d’âge 
         if (critere_age == 1) {
             if ((age_type == 1 && age >= 2) || (age_type == 2 && age <= 10)){
