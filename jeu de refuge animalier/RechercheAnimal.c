@@ -31,7 +31,7 @@ void rechercher_animaux() {
             printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
             scanf("%d", &filtre_espece);
             while (getchar() != '\n');
-        }while(filtre_espece<1 && filtre_espece>4);
+        }while(filtre_espece<1 || filtre_espece>4);
     }
 
     // Demande si l'utilisateur veut filtrer par âge
