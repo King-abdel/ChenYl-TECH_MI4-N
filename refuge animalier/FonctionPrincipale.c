@@ -102,7 +102,7 @@ int afficherMenu() {
 }
 
 int main(){
-    int a=0;
+    int a = 0;
     afficherBanniere();
     charger_animaux();
     prochain_id = 1;
@@ -112,8 +112,7 @@ int main(){
         }
 }
     while(a != 8){
-	a= afficherMenu();
+	a = afficherMenu();
     }
-	
 return 0;
 }

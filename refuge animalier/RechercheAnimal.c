@@ -22,7 +22,7 @@ void rechercher_animaux() {
     while (getchar() != '\n');  // supprime '\n' du tampon
     if (critere_nom == 1) {
         do{
-            printf("Nom : \n");
+            printf("Nom : ");
             fgets(nom, MAX, stdin);       // lire une chaîne avec espaces
             nom[strcspn(nom, "\n")] = '\0';  // enlève le '\n' de la chaîne du nom
         }while(strlen(nom) == 0);
