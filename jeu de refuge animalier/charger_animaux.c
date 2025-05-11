@@ -19,7 +19,7 @@ void charger_animaux() {
                   &refuge[nb_animal].espece,
                   &refuge[nb_animal].annee,
                   &refuge[nb_animal].poids,
-                  refuge[nb_animal].descrip) == 6) {
+                  &refuge[nb_animal].descrip) == 6) {
         nb_animal++;
     }
 

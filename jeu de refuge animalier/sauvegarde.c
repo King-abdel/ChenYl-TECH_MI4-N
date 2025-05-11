@@ -1,26 +1,24 @@
 #include "FichierStructure.h"
 #include "FichierSource.h"
 
+// Fonction pour sauvegarder les animaux depuis un fichier
 void sauvegarder_animaux() {
-    // Création du répertoire "sauvegardes" s'il n'existe pas
+    // Création du dossier "sauvegardes" 
     mkdir("sauvegardes", 0777);
 
-    // Génération du nom de fichier horodaté
-    time_t now = time(NULL);
-    struct tm* t = localtime(&now);
-    char filename[256];
-    strftime(filename, sizeof(filename), "sauvegardes/animaux_%Y-%m-%d_%H-%M-%S.txt", t);
+    // Nom de fichier fixe (toujours le même)
+    const char* fichier = "animaux.txt";
 
-    // Ouverture du fichier en écriture
-    FILE* file = fopen(filename, "w");
-    if (!file) {
+    // Ouverture du fichier en écriture (écrase l'ancien)
+    FILE* F = fopen(fichier, "w");
+    if (F==NULL) {
         perror("Erreur d'ouverture du fichier de sauvegarde");
         return;
     }
 
     // Écriture des données
     for (int i = 0; i < nb_animal; i++) {
-        fprintf(file, "%d;%s;%d;%d;%.2f;%s\n",
+        fprintf(F, "%d;%s;%d;%d;%.2f;%s\n",
                 refuge[i].id,
                 refuge[i].nom,
                 refuge[i].espece,
@@ -29,5 +27,6 @@ void sauvegarder_animaux() {
                 refuge[i].descrip);
     }
 
-    fclose(file);
-    printf("📁 Sauvegarde c
+    fclose(F);
+}
+

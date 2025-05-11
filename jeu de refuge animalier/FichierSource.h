@@ -15,7 +15,7 @@ void day_food();
 void afficherInventaireNbDesc();
 void modifierAnimal();
 void charger_animaux();
-void sauvegarder_animaux(const char* filename);
+void sauvegarder_animaux();
 #endif 
 
 
