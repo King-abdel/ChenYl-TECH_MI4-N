@@ -51,21 +51,21 @@ void ajouter_animal() { 		// Fonction pour ajouter un animal au refuge
 
         // Saisie du type d'espèce 
         do {
-            printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : \n");
+            printf("Espèce (1:Chien, 2:Chat, 3:Hamster, 4:Autruche) : ");
             scanf("%d", (int*)&a.espece);
             while (getchar() != '\n');  // supprimer le '\n' du tampon
         } while(a.espece < 1 || a.espece > 4);
 
         // Saisie de l’année de naissance
         do {
-            printf("Année de naissance : \n");
+            printf("Année de naissance : ");
             scanf("%d", &a.annee);
             while (getchar() != '\n');  
         } while(a.annee < 0);
         
         // Saisie du poids 
         do {
-            printf("Poids (kg) : \n");
+            printf("Poids (kg) : ");
             scanf("%f", &a.poids);
             while (getchar() != '\n');
         } while(a.poids <= 0);   
@@ -73,7 +73,7 @@ void ajouter_animal() { 		// Fonction pour ajouter un animal au refuge
         int choix;
         // Demande pour ajouter une description 
         do {
-            printf("Voulez-vous ajouter une description : 1 oui 2 non \n");
+            printf("Voulez-vous ajouter une description ? (1:Oui / 0:Non) :  ");
             scanf("%d", &choix);
             while (getchar() != '\n');  // enlève le '\n'
         } while(choix != 1 && choix != 2);
