@@ -101,7 +101,7 @@ void charger_animaux() {
         perror("Fichier introuvable ou erreur d'ouverture");
         return;
     }
-
+    
     nb_animal = 0;  // Réinitialise le compteur avant chargement
 
     while (nb_animal < NbAnimal &&
