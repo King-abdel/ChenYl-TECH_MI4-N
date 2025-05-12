@@ -10,7 +10,7 @@ Ce programme en langage C permet de gérer un refuge animalier. Il offre un menu
 - L’animal est automatiquement attribué à un ID unique.
 - Les données sont enregistrées dans un fichier `animaux.txt`.
 
-### 🔍 Rechercher un animal
+###  Rechercher un animal
 - Recherches combinables selon : le nom, l'espèce, ou le type d’âge (jeune < 2 ans / senior > 10 ans).
 - Affichage détaillé des animaux correspondant aux critères.
 
