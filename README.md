@@ -1,4 +1,4 @@
-#  Projet Refuge Animalier — Application Console en C
+#  Projet Refuge Animalier 
 
 ##  Description
 Ce programme en langage C permet de gérer un refuge animalier. Il offre un menu interactif  pour réaliser plusieurs opérations : ajouter, modifier, adopter ou rechercher des animaux, calculer la quantité de nourriture nécessaire, afficher l'inventaire par espèce, et estimer la charge de nettoyage hebdomadaire.
